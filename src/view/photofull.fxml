@@ -4,7 +4,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -15,7 +14,7 @@
   <children>
       <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="899.0" text="Photo Library">
          <graphic>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Quit" textFill="#d32626">
+            <Button id="quitButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Quit" textFill="#d32626">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -24,15 +23,15 @@
          <content>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="398.0" layoutY="508.0" mnemonicParsing="false" text="Return to album">
+                  <Button id="returnToAlbumButton" layoutX="398.0" layoutY="508.0" mnemonicParsing="false" text="Return to album">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <TextField alignment="CENTER" layoutX="670.0" layoutY="454.0" text="Edit caption" />
-                  <TextField alignment="CENTER" editable="false" layoutX="487.0" layoutY="455.0" text="Tag name" />
-                  <TextField alignment="CENTER" editable="false" layoutX="288.0" layoutY="455.0" text="Tag value" />
-                  <TextField alignment="CENTER" editable="false" layoutX="91.0" layoutY="454.0" text="Photo Date" />
+                  <TextField id="editCaptionTextField" alignment="CENTER" layoutX="670.0" layoutY="454.0" text="Edit caption" />
+                  <TextField id="tagNameDisplayTextField" alignment="CENTER" editable="false" layoutX="487.0" layoutY="455.0" text="Tag name" />
+                  <TextField id="tagValueDisplayTextField" alignment="CENTER" editable="false" layoutX="288.0" layoutY="455.0" text="Tag value" />
+                  <TextField id="dateDisplayTextField" alignment="CENTER" editable="false" layoutX="91.0" layoutY="454.0" text="Photo Date" />
                   <Text disable="true" layoutX="721.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caption">
                      <font>
                         <Font name="System Bold" size="16.0" />
@@ -53,13 +52,10 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Text>
-                  <ImageView fitHeight="332.0" fitWidth="444.0" layoutX="229.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="picDisplayImgView" fitHeight="332.0" fitWidth="444.0" layoutX="229.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
                      <effect>
                         <DropShadow />
                      </effect>
-                     <image>
-                        <Image url="@../../Pictures/LifeFrame/1.jpg" />
-                     </image>
                   </ImageView>
                </children>
             </AnchorPane>

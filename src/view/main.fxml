@@ -7,7 +7,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -21,7 +20,7 @@
          <content>
           <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="474.0" prefWidth="900.0">
             <items>
-              <AnchorPane prefHeight="567.0" prefWidth="196.0">
+              <AnchorPane id="optionsPanel" prefHeight="567.0" prefWidth="196.0">
                 <children>
                   <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="82.0" style="&#10;" text="Options" textAlignment="CENTER" wrapText="false">
                     <font>
@@ -31,27 +30,27 @@
                       <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
                     </textFill>
                   </Label>
-                        <Button layoutX="29.0" layoutY="81.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Add new album">
+                        <Button id="addAlbumButton" layoutX="29.0" layoutY="81.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Add new album">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="29.0" layoutY="233.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Delete album">
+                        <Button id="deleteAlbumButton" layoutX="29.0" layoutY="233.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Delete album">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="29.0" layoutY="156.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Rename album">
+                        <Button id="renameButton" layoutX="29.0" layoutY="156.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Rename album">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="29.0" layoutY="311.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Search">
+                        <Button id="searchButton" layoutX="29.0" layoutY="311.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Search">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="29.0" layoutY="392.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Logout">
+                        <Button id="logoutButton" layoutX="29.0" layoutY="392.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Logout">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -60,21 +59,15 @@
               </AnchorPane>
               <ScrollPane prefHeight="567.0" prefWidth="335.0">
                 <content>
-                  <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="444.0">
+                  <AnchorPane id="albumsDisplayPanel" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="444.0">
                     <children>
                       <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Albums" textAlignment="CENTER" textFill="$x2" wrapText="false" />
                               <ImageView fitHeight="86.0" fitWidth="115.0" layoutX="29.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../Pictures/LifeFrame/1.jpg" />
-                                 </image>
                                  <effect>
                                     <DropShadow />
                                  </effect>
                               </ImageView>
                               <ImageView fitHeight="86.0" fitWidth="115.0" layoutX="165.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../Pictures/LifeFrame/2.jpg" />
-                                 </image>
                                  <effect>
                                     <DropShadow />
                                  </effect>
@@ -93,10 +86,10 @@
                   </AnchorPane>
                 </content>
               </ScrollPane>
-              <AnchorPane>
+              <AnchorPane id="detailsPanel">
                 <children>
                   <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                        <TextField alignment="CENTER" layoutX="36.0" layoutY="122.0" promptText="Edit album name" />
+                        <TextField id="editAlbumNameTextField" alignment="CENTER" layoutX="36.0" layoutY="122.0" promptText="Edit album name" />
                         <Text disable="true" layoutX="62.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album name">
                            <font>
                               <Font name="System Bold" size="16.0" />
@@ -108,7 +101,7 @@
           </SplitPane>
          </content>
          <graphic>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Quit" textFill="#d32626">
+            <Button id="quitButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Quit" textFill="#d32626">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
