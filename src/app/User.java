@@ -1,8 +1,9 @@
 package app;
-
-public class User {
-	
-	
-	
-
+public class User
+{
+	String username;
+	public User(String username)
+	{
+		this.username = username;
+	}
 }

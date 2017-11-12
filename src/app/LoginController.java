@@ -16,7 +16,7 @@ public class LoginController {
 	@FXML
 	TextField usernameTextField;
 	
-	private ObservableList<User> userList;
+	ObservableList<User> userList;
 	
 	
 	public void start(Stage primaryStage) {
