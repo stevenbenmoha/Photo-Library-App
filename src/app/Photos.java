@@ -21,6 +21,11 @@ public class Photos extends Application {
 			loader.setLocation(getClass().getResource("/view/login.fxml"));
 			VBox root = (VBox)loader.load();
 			
+			LoginController controller = loader.getController();
+			controller.start(primaryStage);
+			primaryStage.setResizable(true);
+			primaryStage.setTitle("Photo Library");
+			
 			Scene scene = new Scene(root,899,601);
 			primaryStage.setScene(scene);
 			primaryStage.show();

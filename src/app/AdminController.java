@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class AdminController {
@@ -19,6 +21,14 @@ public class AdminController {
 	ListView<User> userListView;
 	
 	private ObservableList<User> userList;
+	private final VBox rootPane;
+	
+	public AdminController() {
+		
+		rootPane = new VBox();
+	}
+	
+	
 	
 	public void start(Stage primaryStage) {
 		
@@ -27,6 +37,13 @@ public class AdminController {
 			
 		
 	}
+	
+	
+	public Pane getRootPane() {
+        return rootPane ;
+    }
+
+	
 	
 	
 }

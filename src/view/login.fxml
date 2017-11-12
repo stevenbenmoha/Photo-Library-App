@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="600.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.LoginController">
   <children>
       <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="899.0" text="Photo Library">
          <graphic>
-            <Button id="quitButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Quit" textFill="#d32626">
+            <Button fx:id="quitButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Quit" textFill="#d32626">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -21,8 +21,8 @@
          <content>
             <AnchorPane id="mainPanel" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TextField id="usernameTextField" alignment="CENTER" layoutX="326.0" layoutY="158.0" prefHeight="25.0" prefWidth="203.0" promptText="Enter username" />
-                  <Button id="loginButton" layoutX="377.0" layoutY="199.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Login" />
+                  <TextField id="usernameTextField" onAction="#goToAdmin" alignment="CENTER" layoutX="326.0" layoutY="158.0" prefHeight="25.0" prefWidth="203.0" promptText="Enter username" />
+                  <Button fx:id="loginButton" layoutX="377.0" layoutY="199.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Login" />
                   <Label layoutX="347.0" layoutY="69.0" text="Photo Library">
                      <font>
                         <Font name="System Bold" size="25.0" />

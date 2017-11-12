@@ -16,14 +16,26 @@ public class LoginController {
 	@FXML
 	TextField usernameTextField;
 	
-	private ObservableList<User> userList;
+	ObservableList<User> userList;
 	
 	
 	public void start(Stage primaryStage) {
 		
+		usernameTextField.setEditable(false);
+		
+		if(usernameTextField.getText() == "admin") {
 				
+			loginButton.setOnAction(e->  {
+				
+				AdminController adminPage = new AdminController();
+				primaryStage.getScene().setRoot(adminPage.getRootPane());
+				
+				});			
+			
+			}
+		
+		}
+		
+		
 	}
 	
-	
-
-}
