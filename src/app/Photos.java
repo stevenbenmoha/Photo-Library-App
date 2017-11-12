@@ -11,6 +11,7 @@ import javafx.scene.*;
 
 
 
+
 public class Photos extends Application {
 	@Override
 	public void start(Stage primaryStage) {
