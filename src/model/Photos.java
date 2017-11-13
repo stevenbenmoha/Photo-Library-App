@@ -1,4 +1,4 @@
-package app;
+package model;
 	
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +8,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.*;
+import controller.*;
 
 
 

@@ -1,5 +1,6 @@
-package app;
+package model;
 
 public class Photo
 {
+	
 }
