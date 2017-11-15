@@ -126,7 +126,7 @@ public class LoginController
 			String[] splitted = curLine.split("\t");
 			String username = splitted[0].trim();
 			String photoLibraryID = splitted[1].trim();
-			User u = new User(username, Integer.parseInt(photoLibraryID));
+			User u = new User(username, photoLibraryID);
 			userList.add(u);
 		}
 		scan.close();

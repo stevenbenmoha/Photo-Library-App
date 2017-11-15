@@ -82,7 +82,8 @@ public class AdminController
 				}
 				listLength++;
 			}
-			User newUser = new User(usernameEntry.getText(), listLength + 1);
+			String tmp = Integer.toString(listLength + 1);
+			User newUser = new User(usernameEntry.getText(), tmp);
 			userList.add(newUser);
 			users.getSelectionModel().select(userList.indexOf(newUser));
 			add.setDisable(true);
@@ -189,7 +190,7 @@ public class AdminController
 			String[] splitted = curLine.split("\t");
 			String username = splitted[0].trim();
 			String photoLibraryID = splitted[1].trim();
-			User u = new User(username, Integer.parseInt(photoLibraryID));
+			User u = new User(username, photoLibraryID);
 			userList.add(u);
 		}
 		scan.close();
