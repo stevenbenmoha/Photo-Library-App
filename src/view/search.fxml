@@ -11,73 +11,92 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SearchController">
-  <children>
-      <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="899.0" text="Photo Library">
-         <graphic>
-            <Button fx:id="quitButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Quit" textFill="#d32626">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-         </graphic>
-         <content>
-            <SplitPane dividerPositions="0.2505567928730512" focusTraversable="true" prefHeight="474.0" prefWidth="900.0">
-               <items>
-                  <AnchorPane fx:id="searchPanel" prefHeight="567.0" prefWidth="196.0">
-                     <children>
-                        <Button fx:id="searchTagButton" layoutX="23.0" layoutY="198.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="171.0" text="Search by tag">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                        <Label layoutX="72.0" layoutY="61.0" text="Search">
-                           <font>
-                              <Font name="System Bold" size="25.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="searchDateButton" layoutX="23.0" layoutY="261.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="171.0" text="Search by date range">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="createAlbumFromResultsButton" layoutX="23.0" layoutY="324.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="171.0" text="Create album from results">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                        <TextField fx:id="searchTextField" layoutX="16.0" layoutY="127.0" prefHeight="37.0" prefWidth="191.0" promptText="Search here..." />
-                        <Button fx:id="logoutButton" layoutX="23.0" layoutY="445.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="171.0" text="Logout">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="returnToAlbumsButton" layoutX="26.0" layoutY="386.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Return to albums">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-                  <ScrollPane prefHeight="567.0" prefWidth="335.0">
-                     <content>
-                        <AnchorPane fx:id="resultsPanel" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="444.0">
-                           <children>
-                              <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Results" textAlignment="CENTER" wrapText="false">
-                                 <font>
-                                    <Font size="18.0" fx:id="x1" />
-                                 </font>
-                                 <textFill>
-                                    <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
-                                 </textFill>
-                              </Label>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </ScrollPane>
-               </items>
-            </SplitPane>
-         </content>
-      </TitledPane>
-  </children>
+<VBox prefHeight="600.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/9"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SearchController">
+	<children>
+		<TitledPane animated="false" maxHeight="-Infinity"
+			maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+			prefHeight="601.0" prefWidth="899.0" text="Photo Library">
+			<graphic>
+				<Button fx:id="quitButton" mnemonicParsing="false"
+					prefHeight="25.0" prefWidth="54.0" text="Quit" textFill="#d32626">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Button>
+			</graphic>
+			<content>
+				<SplitPane dividerPositions="0.2505567928730512"
+					focusTraversable="true" prefHeight="474.0" prefWidth="900.0">
+					<items>
+						<AnchorPane fx:id="searchPanel" prefHeight="567.0"
+							prefWidth="196.0">
+							<children>
+								<Button fx:id="searchTagButton" layoutX="23.0" layoutY="198.0"
+									mnemonicParsing="false" prefHeight="45.0" prefWidth="171.0"
+									text="Search by tag">
+									<font>
+										<Font name="System Bold" size="12.0" />
+									</font>
+								</Button>
+								<Label layoutX="72.0" layoutY="61.0" text="Search">
+									<font>
+										<Font name="System Bold" size="25.0" />
+									</font>
+								</Label>
+								<Button fx:id="searchDateButton" layoutX="23.0" layoutY="261.0"
+									mnemonicParsing="false" prefHeight="45.0" prefWidth="171.0"
+									text="Search by date range">
+									<font>
+										<Font name="System Bold" size="12.0" />
+									</font>
+								</Button>
+								<Button fx:id="createAlbumFromResultsButton" layoutX="23.0"
+									layoutY="324.0" mnemonicParsing="false" prefHeight="45.0"
+									prefWidth="171.0" text="Create album from results">
+									<font>
+										<Font name="System Bold" size="12.0" />
+									</font>
+								</Button>
+								<TextField fx:id="searchTextField" layoutX="16.0"
+									layoutY="127.0" prefHeight="37.0" prefWidth="191.0" promptText="Search here..." />
+								<Button fx:id="logoutButton" layoutX="23.0" layoutY="445.0"
+									mnemonicParsing="false" prefHeight="41.0" prefWidth="171.0"
+									text="Logout">
+									<font>
+										<Font name="System Bold" size="16.0" />
+									</font>
+								</Button>
+								<Button fx:id="returnToAlbumsButton" layoutX="26.0"
+									layoutY="386.0" mnemonicParsing="false" prefHeight="41.0"
+									prefWidth="164.0" text="Return to albums">
+									<font>
+										<Font name="System Bold" size="16.0" />
+									</font>
+								</Button>
+							</children>
+						</AnchorPane>
+						<ScrollPane prefHeight="567.0" prefWidth="335.0">
+							<content>
+								<AnchorPane fx:id="resultsPanel" minHeight="-1.0"
+									minWidth="-1.0" prefHeight="545.0" prefWidth="444.0">
+									<children>
+										<Label alignment="CENTER" layoutX="14.0" layoutY="14.0"
+											style="&#10;" text="Results" textAlignment="CENTER" wrapText="false">
+											<font>
+												<Font size="18.0" fx:id="x1" />
+											</font>
+											<textFill>
+												<Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
+											</textFill>
+										</Label>
+									</children>
+								</AnchorPane>
+							</content>
+						</ScrollPane>
+					</items>
+				</SplitPane>
+			</content>
+		</TitledPane>
+	</children>
 </VBox>

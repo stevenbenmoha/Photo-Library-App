@@ -11,45 +11,55 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
-  <children>
-      <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="899.0" text="Photo Library">
-         <graphic>
-            <Button fx:id="quitButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Quit" textFill="#d32626">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-         </graphic>
-         <content>
-            <AnchorPane id="mainPanel" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="338.0" layoutY="183.0" prefHeight="25.0" prefWidth="203.0" promptText="Enter username">
-                     <font>
-                        <Font size="15.0" />
-                     </font></TextField>
-                  <Button fx:id="loginButton" layoutX="392.0" layoutY="234.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Login">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Button>
-                  <Label layoutX="279.0" layoutY="60.0" text="Photo Library">
-                     <font>
-                        <Font name="System Bold" size="50.0" />
-                     </font>
-                     <effect>
-                        <Lighting>
-                           <bumpInput>
-                              <Shadow />
-                           </bumpInput>
-                           <light>
-                              <Light.Distant />
-                           </light>
-                        </Lighting>
-                     </effect>
-                  </Label>
-               </children>
-            </AnchorPane>
-         </content>
-      </TitledPane>
-  </children>
+<VBox prefHeight="600.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/9"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+	<children>
+		<TitledPane animated="false" maxHeight="-Infinity"
+			maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+			prefHeight="601.0" prefWidth="899.0" text="Photo Library">
+			<graphic>
+				<Button fx:id="quitButton" mnemonicParsing="false"
+					prefHeight="25.0" prefWidth="54.0" text="Quit" textFill="#d32626">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Button>
+			</graphic>
+			<content>
+				<AnchorPane id="mainPanel" minHeight="0.0" minWidth="0.0"
+					prefHeight="180.0" prefWidth="200.0">
+					<children>
+						<TextField fx:id="usernameTextField" alignment="CENTER"
+							layoutX="338.0" layoutY="183.0" prefHeight="25.0" prefWidth="203.0"
+							promptText="Enter username">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</TextField>
+						<Button fx:id="loginButton" layoutX="392.0" layoutY="234.0"
+							mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Login">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Button>
+						<Label layoutX="279.0" layoutY="60.0" text="Photo Library">
+							<font>
+								<Font name="System Bold" size="50.0" />
+							</font>
+							<effect>
+								<Lighting>
+									<bumpInput>
+										<Shadow />
+									</bumpInput>
+									<light>
+										<Light.Distant />
+									</light>
+								</Lighting>
+							</effect>
+						</Label>
+					</children>
+				</AnchorPane>
+			</content>
+		</TitledPane>
+	</children>
 </VBox>

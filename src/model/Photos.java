@@ -1,5 +1,4 @@
 package model;
-	
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -9,33 +8,31 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.*;
 import controller.*;
-
-
-
-
-public class Photos extends Application {
+public class Photos extends Application
+{
 	@Override
-	public void start(Stage primaryStage) {
-		try {
-			
+	public void start(Stage primaryStage)
+	{
+		try
+		{
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/view/login.fxml"));
 			VBox root = (VBox)loader.load();
-			
 			LoginController controller = loader.getController();
 			controller.start(primaryStage);
 			primaryStage.setResizable(true);
 			primaryStage.setTitle("Photo Library");
-			
-			Scene scene = new Scene(root,899,601);
+			Scene scene = new Scene(root, 899, 601);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-		} catch(Exception e) {
+		}
+		catch(Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		launch(args);
 	}
 }

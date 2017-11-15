@@ -14,102 +14,135 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="600.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoLibraryController">
-  <children>
-      <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="899.0" text="Photo Library">
-         <content>
-          <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="474.0" prefWidth="900.0">
-            <items>
-              <AnchorPane fx:id="optionsPanel" prefHeight="567.0" prefWidth="196.0">
-                <children>
-                  <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="82.0" style="&#10;" text="Options" textAlignment="CENTER" wrapText="false">
-                    <font>
-                      <Font size="18.0" fx:id="x1" />
-                    </font>
-                    <textFill>
-                      <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
-                    </textFill>
-                  </Label>
-                        <Button fx:id="addAlbumButton" layoutX="29.0" layoutY="81.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Add new album">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="deleteAlbumButton" layoutX="29.0" layoutY="233.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Delete album">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="renameButton" layoutX="29.0" layoutY="156.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Rename album">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="searchButton" layoutX="29.0" layoutY="311.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Search">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="logoutButton" layoutX="29.0" layoutY="392.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Logout">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Button>
-                </children>
-              </AnchorPane>
-              <ScrollPane prefHeight="567.0" prefWidth="335.0">
-                <content>
-                  <AnchorPane fx:id="albumsDisplayPanel" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="444.0">
-                    <children>
-                      <Label fx:id="greeting" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="46.0" prefWidth="130.0" style="&#10;" text="'s Albums" textAlignment="CENTER" textFill="$x2" wrapText="false">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font></Label>
-                              <ImageView fitHeight="86.0" fitWidth="115.0" layoutX="29.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
-                                 <effect>
-                                    <DropShadow />
-                                 </effect>
-                              </ImageView>
-                              <ImageView fitHeight="86.0" fitWidth="115.0" layoutX="165.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
-                                 <effect>
-                                    <DropShadow />
-                                 </effect>
-                              </ImageView>
-                              <Text disable="true" layoutX="57.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="album1">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Text>
-                              <Text disable="true" layoutX="194.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="album2">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Text>
-                    </children>
-                  </AnchorPane>
-                </content>
-              </ScrollPane>
-              <AnchorPane fx:id="detailsPanel">
-                <children>
-                  <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                        <TextField fx:id="editAlbumNameTextField" alignment="CENTER" layoutX="36.0" layoutY="122.0" promptText="Edit album name" />
-                        <Text disable="true" layoutX="62.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album name">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Text>
-                </children>
-              </AnchorPane>
-            </items>
-          </SplitPane>
-         </content>
-         <graphic>
-            <Button fx:id="quitButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Quit" textFill="#d32626">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-         </graphic>
-      </TitledPane>
-  </children>
+<VBox prefHeight="600.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/9"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoLibraryController">
+	<children>
+		<TitledPane animated="false" maxHeight="-Infinity"
+			maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+			prefHeight="601.0" prefWidth="899.0" text="Photo Library">
+			<content>
+				<SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512"
+					focusTraversable="true" prefHeight="474.0" prefWidth="900.0">
+					<items>
+						<AnchorPane fx:id="optionsPanel" prefHeight="567.0"
+							prefWidth="196.0">
+							<children>
+								<Label alignment="CENTER" layoutX="14.0" layoutY="14.0"
+									minWidth="60.0" prefWidth="82.0" style="&#10;" text="Options"
+									textAlignment="CENTER" wrapText="false">
+									<font>
+										<Font size="18.0" fx:id="x1" />
+									</font>
+									<textFill>
+										<Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
+									</textFill>
+								</Label>
+								<Button fx:id="addAlbumButton" layoutX="29.0" layoutY="81.0"
+									mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0"
+									text="Add new album">
+									<font>
+										<Font name="System Bold" size="16.0" />
+									</font>
+								</Button>
+								<Button fx:id="deleteAlbumButton" layoutX="29.0" layoutY="233.0"
+									mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0"
+									text="Delete album">
+									<font>
+										<Font name="System Bold" size="16.0" />
+									</font>
+								</Button>
+								<Button fx:id="renameButton" layoutX="29.0" layoutY="156.0"
+									mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0"
+									text="Rename album">
+									<font>
+										<Font name="System Bold" size="16.0" />
+									</font>
+								</Button>
+								<Button fx:id="searchButton" layoutX="29.0" layoutY="311.0"
+									mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0"
+									text="Search">
+									<font>
+										<Font name="System Bold" size="16.0" />
+									</font>
+								</Button>
+								<Button fx:id="logoutButton" layoutX="29.0" layoutY="392.0"
+									mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0"
+									text="Logout">
+									<font>
+										<Font name="System Bold" size="16.0" />
+									</font>
+								</Button>
+							</children>
+						</AnchorPane>
+						<ScrollPane prefHeight="567.0" prefWidth="335.0">
+							<content>
+								<AnchorPane fx:id="albumsDisplayPanel" minHeight="-1.0"
+									minWidth="-1.0" prefHeight="545.0" prefWidth="444.0">
+									<children>
+										<Label fx:id="greeting" alignment="CENTER" layoutX="14.0"
+											layoutY="14.0" prefHeight="46.0" prefWidth="130.0" style="&#10;"
+											text="'s Albums" textAlignment="CENTER" textFill="$x2"
+											wrapText="false">
+											<font>
+												<Font size="18.0" />
+											</font>
+										</Label>
+										<ImageView fitHeight="86.0" fitWidth="115.0"
+											layoutX="29.0" layoutY="72.0" pickOnBounds="true"
+											preserveRatio="true">
+											<effect>
+												<DropShadow />
+											</effect>
+										</ImageView>
+										<ImageView fitHeight="86.0" fitWidth="115.0"
+											layoutX="165.0" layoutY="72.0" pickOnBounds="true"
+											preserveRatio="true">
+											<effect>
+												<DropShadow />
+											</effect>
+										</ImageView>
+										<Text disable="true" layoutX="57.0" layoutY="185.0"
+											strokeType="OUTSIDE" strokeWidth="0.0" text="album1">
+											<font>
+												<Font name="System Bold" size="16.0" />
+											</font>
+										</Text>
+										<Text disable="true" layoutX="194.0" layoutY="184.0"
+											strokeType="OUTSIDE" strokeWidth="0.0" text="album2">
+											<font>
+												<Font name="System Bold" size="16.0" />
+											</font>
+										</Text>
+									</children>
+								</AnchorPane>
+							</content>
+						</ScrollPane>
+						<AnchorPane fx:id="detailsPanel">
+							<children>
+								<Label alignment="CENTER" font="$x1" layoutX="14.0"
+									layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER"
+									textFill="$x2" wrapText="false" />
+								<TextField fx:id="editAlbumNameTextField" alignment="CENTER"
+									layoutX="36.0" layoutY="122.0" promptText="Edit album name" />
+								<Text disable="true" layoutX="62.0" layoutY="100.0"
+									strokeType="OUTSIDE" strokeWidth="0.0" text="Album name">
+									<font>
+										<Font name="System Bold" size="16.0" />
+									</font>
+								</Text>
+							</children>
+						</AnchorPane>
+					</items>
+				</SplitPane>
+			</content>
+			<graphic>
+				<Button fx:id="quitButton" mnemonicParsing="false"
+					prefHeight="25.0" prefWidth="54.0" text="Quit" textFill="#d32626">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Button>
+			</graphic>
+		</TitledPane>
+	</children>
 </VBox>
