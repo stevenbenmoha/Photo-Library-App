@@ -1,19 +1,20 @@
 package controller;
 import model.*;
-import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Scanner;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -23,19 +24,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-public class AdminController
+public class AdminController extends Load
 {
 	@FXML
-	Button quitButton, createUserButton, deleteUserButton, logoutButton, add;
+	Button  createUserButton, deleteUserButton, add;
 	@FXML
 	TextField usernameEntry;
 	@FXML
 	ListView<User> users = new ListView<User>();
-	private ObservableList<User> userList;
-	public void start(Stage primaryStage)
-	{
-		userList = FXCollections.observableArrayList();
-		readFile();
+		
+	public void start(Stage primaryStage) throws IOException
+	{	
+		userList = readFile();
 		users.setItems(userList);
 		users.getSelectionModel().selectFirst();
 		quitButton.setOnAction(this::quitProgram);
@@ -90,14 +90,7 @@ public class AdminController
 			usernameEntry.setText("");
 			usernameEntry.setDisable(true);
 			deleteUserButton.setDisable(false);
-			try
-			{
-				writeToTextFile();
-			}
-			catch(FileNotFoundException e)
-			{
-				e.printStackTrace();
-			}
+			write(userList);
 		}
 		else if(usernameEntry.getText().isEmpty())
 		{
@@ -127,90 +120,15 @@ public class AdminController
 			{
 				deleteUserButton.setDisable(true);
 			}
-			try
-			{
-				writeToTextFile();
-			}
-			catch(FileNotFoundException e)
-			{
-				e.printStackTrace();
-			}
+			 write(userList);
 		}
 		if(result.get() == ButtonType.CANCEL)
 		{
 			deleteUserButton.setDisable(false);
 		}
 	}
-	@FXML
-	private void quitProgram(ActionEvent event)
-	{
-		Stage stage = (Stage)quitButton.getScene().getWindow();
-		stage.close();
-	}
-	@FXML
-	private void logout(ActionEvent event) throws IOException
-	{
-		Stage stage;
-		stage = (Stage)logoutButton.getScene().getWindow();
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("/view/login.fxml"));
-		VBox root = (VBox)loader.load();
-		LoginController controller = loader.getController();
-		controller.start(stage);
-		stage.setResizable(true);
-		stage.setTitle("Photo Library");
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-	}
-	private void readFile()
-	{
-		Scanner scan = null;
-		try
-		{
-			scan = new Scanner(new File("users.txt"));
-		}
-		// Make sure a file exists and a lack of file won't crash the program
-		catch(FileNotFoundException e)
-		{
-			File file = new File("users.txt");
-			try
-			{
-				file.createNewFile();
-			}
-			catch(IOException e1)
-			{
-				e1.printStackTrace();
-			}
-			return;
-		}
-		while(scan.hasNextLine())
-		{
-			String curLine = scan.nextLine();
-			String[] splitted = curLine.split("\t");
-			String username = splitted[0].trim();
-			String photoLibraryID = splitted[1].trim();
-			User u = new User(username, photoLibraryID);
-			userList.add(u);
-		}
-		scan.close();
-	}
-	public void writeToTextFile() throws FileNotFoundException
-	{
-		try
-		{
-			FileWriter writer = new FileWriter("users.txt");
-			BufferedWriter bufferedWriter = new BufferedWriter(writer);
-			for(User u : userList)
-			{
-				bufferedWriter.write(u.getName() + "\t" + u.getID());
-				bufferedWriter.newLine();
-			}
-			bufferedWriter.close();
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
-}
+		
+	    }
+
+	
+

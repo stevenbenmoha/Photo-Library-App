@@ -18,17 +18,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-public class LoginController
+public class LoginController extends Load
 {
 	@FXML
-	Button quitButton, loginButton;
+	Button loginButton;
 	@FXML
 	TextField usernameTextField;
-	private ObservableList<User> userList;
+	
+
 	public void start(Stage primaryStage)
 	{
-		userList = FXCollections.observableArrayList();
-		readFile();
+		userList = readFile();
 		usernameTextField.setEditable(true);
 		quitButton.setOnAction(this::quitProgram);
 		loginButton.setOnAction(event ->
@@ -99,36 +99,5 @@ public class LoginController
 		Stage stage = (Stage)quitButton.getScene().getWindow();
 		stage.close();
 	}
-	private void readFile()
-	{
-		Scanner scan = null;
-		try
-		{
-			scan = new Scanner(new File("users.txt"));
-		}
-		// Make sure a file exists and a lack of file won't crash the program
-		catch(FileNotFoundException e)
-		{
-			File file = new File("users.txt");
-			try
-			{
-				file.createNewFile();
-			}
-			catch(IOException e1)
-			{
-				e1.printStackTrace();
-			}
-			return;
-		}
-		while(scan.hasNextLine())
-		{
-			String curLine = scan.nextLine();
-			String[] splitted = curLine.split("\t");
-			String username = splitted[0].trim();
-			String photoLibraryID = splitted[1].trim();
-			User u = new User(username, photoLibraryID);
-			userList.add(u);
-		}
-		scan.close();
-	}
+	
 }
