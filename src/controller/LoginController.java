@@ -27,8 +27,9 @@ public class LoginController extends DataPlusButtons
 	
 
 	public void start(Stage primaryStage)
-	{
-		userList = readFile();
+	{	
+		
+		userList = readUserFile();
 		usernameTextField.setEditable(true);
 		quitButton.setOnAction(this::quitProgram);
 		loginButton.setOnAction(event ->
@@ -74,7 +75,7 @@ public class LoginController extends DataPlusButtons
 				loader.setLocation(getClass().getResource("/view/main.fxml"));
 				VBox root = (VBox)loader.load();
 				PhotoLibraryController controller = loader.getController();
-				controller.start(stage, u);
+				controller.start(stage);
 				stage.setResizable(true);
 				stage.setTitle("Photo Library");
 				Scene scene = new Scene(root);

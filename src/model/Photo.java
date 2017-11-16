@@ -1,4 +1,7 @@
 package model;
-public class Photo
+
+import java.io.Serializable;
+
+public class Photo implements Serializable
 {
 }

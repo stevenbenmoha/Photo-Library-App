@@ -35,7 +35,8 @@ public class AdminController extends DataPlusButtons
 		
 	public void start(Stage primaryStage) throws IOException
 	{	
-		userList = readFile();
+		
+		userList = readUserFile();
 		users.setItems(userList);
 		users.getSelectionModel().selectFirst();
 		quitButton.setOnAction(this::quitProgram);
@@ -90,7 +91,7 @@ public class AdminController extends DataPlusButtons
 			usernameEntry.setText("");
 			usernameEntry.setDisable(true);
 			deleteUserButton.setDisable(false);
-			write(userList);
+			writeUser(userList);
 		}
 		else if(usernameEntry.getText().isEmpty())
 		{
@@ -120,14 +121,14 @@ public class AdminController extends DataPlusButtons
 			{
 				deleteUserButton.setDisable(true);
 			}
-			 write(userList);
+			 writeUser(userList);
 		}
 		if(result.get() == ButtonType.CANCEL)
 		{
 			deleteUserButton.setDisable(false);
 		}
 	}
-		
+			
 	    }
 
 	
