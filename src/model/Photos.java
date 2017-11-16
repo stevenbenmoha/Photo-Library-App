@@ -1,13 +1,10 @@
 package model;
+import controller.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.SplitPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.*;
-import controller.*;
+import javafx.stage.Stage;
 public class Photos extends Application
 {
 	@Override
