@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Text?>
 
 <VBox prefHeight="600.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/9"
-	xmlns:fx="http://javafx.com/fxml/1">
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoController">
 	<children>
 		<TitledPane animated="false" maxHeight="-Infinity"
 			maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"

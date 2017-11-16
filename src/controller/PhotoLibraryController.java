@@ -8,9 +8,11 @@ import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -19,6 +21,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -110,41 +114,74 @@ public class PhotoLibraryController extends DataPlusButtons
 	
 	@FXML
 	private void populateAlbums() {
-			
+
 		tileDisplay.getChildren().clear();
-			
-		 String path = "src"+ "/model" + "/folder_img.png"; ;
-		 
-		 tileDisplay.setPadding(new Insets(15, 15, 15, 15));
-	     tileDisplay.setHgap(15);
-	     tileDisplay.setVgap(15);
-		
+
+		String path = "src" + "/model" + "/folder_img.png";
+		;
+
+		tileDisplay.setPadding(new Insets(15, 15, 15, 15));
+		tileDisplay.setHgap(15);
+		tileDisplay.setVgap(15);
+
 		File image = new File(path);
-        
 
-        for (Album a : photoLibrary) {
-                ImageView imageView;
-                imageView = createImageView(image);
-                tileDisplay.getChildren().addAll(imageView);
-        }
+		for (Album a : photoLibrary) {
+			ImageView imageView;
+			imageView = createImageView(image);
+			tileDisplay.getChildren().addAll(imageView);
+		}
 
-		
 	}
-	
+
 	public ImageView createImageView(final File imageFile) {
-   
-        ImageView imageView = null;
-        try {
-            final Image image = new Image(new FileInputStream(imageFile), 100, 0, true,
-                    true);
-            imageView = new ImageView(image);
-            imageView.setFitWidth(100);
-        }
-         catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        return imageView;
-    }
-	
+
+		ImageView imageView = null;
+		try {
+			final Image image = new Image(new FileInputStream(imageFile), 100, 0, true, true);
+			imageView = new ImageView(image);
+			imageView.setFitWidth(100);
+			imageView.setCursor(Cursor.HAND);
+			imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				
+				
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					
+				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+						
+						if (mouseEvent.getClickCount() == 2) {
+							try {
+
+								Stage stage;
+								stage = (Stage) searchButton.getScene().getWindow();
+								FXMLLoader loader = new FXMLLoader();
+								loader.setLocation(getClass().getResource("/view/photo.fxml"));
+								VBox root = (VBox) loader.load();
+								PhotoController controller = loader.getController();
+								controller.start(stage);
+								stage.setResizable(true);
+								stage.setTitle("Photo Library");
+								Scene scene = new Scene(root);
+								stage.setScene(scene);
+								stage.show();
+							}
+
+							catch (IOException e) {
+
+								e.printStackTrace();
+							}
+
+						}
+					}
+				}
+			});
+		}
+
+		catch (FileNotFoundException ex) {
+			ex.printStackTrace();
+		}
+		return imageView;
+	}
 	
 }
