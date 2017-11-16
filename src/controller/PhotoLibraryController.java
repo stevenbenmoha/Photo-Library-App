@@ -1,5 +1,6 @@
 package controller;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -95,23 +96,32 @@ public class PhotoLibraryController
 	@FXML
 	private void addAlbum(ActionEvent event)
 	{
-		while(true)
+		try
 		{
-			TextInputDialog dialog = new TextInputDialog("");
-			dialog.setTitle("Create New Album");
-			dialog.setHeaderText("New Photo Album");
-			dialog.setContentText("Please enter a name for your photo album:");
-			Optional<String> name = dialog.showAndWait();
-			if(name.get().trim().equals(""))
+			while(true)
 			{
-				dialog.close();
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Invalid Input");
-				alert.setHeaderText("Invalid Name");
-				alert.setContentText("Album Names Can't Be Blank");
-				alert.showAndWait();
-				continue;
+				TextInputDialog dialog = new TextInputDialog("");
+				dialog.setTitle("Create New Album");
+				dialog.setHeaderText("New Photo Album");
+				dialog.setContentText("Please enter a name for your photo album:");
+				Optional<String> name = dialog.showAndWait();
+				if(name.get().trim().equals(""))
+				{
+					dialog.close();
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Invalid Input");
+					alert.setHeaderText("Invalid Name");
+					alert.setContentText("Album Names Can't Be Blank");
+					alert.showAndWait();
+					continue;
+				}
+				Album album = new Album(name.get());
+				photoLibrary.add(album);
+				break;
 			}
+		}
+		catch(NoSuchElementException e)
+		{
 		}
 	}
 }
