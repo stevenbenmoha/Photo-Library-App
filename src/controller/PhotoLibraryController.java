@@ -1,14 +1,21 @@
 package controller;
 import java.io.IOException;
+import java.util.Optional;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.Album;
 import model.User;
 public class PhotoLibraryController
 {
@@ -18,10 +25,12 @@ public class PhotoLibraryController
 	AnchorPane optionsPanel, albumsDisplayPanel, detailsPanel;
 	@FXML
 	Label greeting;
+	ObservableList<Album> photoLibrary = FXCollections.observableArrayList();
 	public void start(Stage primaryStage, User u)
 	{
 		greeting.setText(u.username + greeting.getText());
 		quitButton.setOnAction(this::quitProgram);
+		addAlbumButton.setOnAction(this::addAlbum);
 		logoutButton.setOnAction(event ->
 		{
 			try
@@ -82,5 +91,27 @@ public class PhotoLibraryController
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+	}
+	@FXML
+	private void addAlbum(ActionEvent event)
+	{
+		while(true)
+		{
+			TextInputDialog dialog = new TextInputDialog("");
+			dialog.setTitle("Create New Album");
+			dialog.setHeaderText("New Photo Album");
+			dialog.setContentText("Please enter a name for your photo album:");
+			Optional<String> name = dialog.showAndWait();
+			if(name.get().trim().equals(""))
+			{
+				dialog.close();
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Invalid Input");
+				alert.setHeaderText("Invalid Name");
+				alert.setContentText("Album Names Can't Be Blank");
+				alert.showAndWait();
+				continue;
+			}
+		}
 	}
 }
