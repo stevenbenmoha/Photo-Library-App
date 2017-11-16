@@ -21,7 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Load implements Serializable {
+public class DataPlusButtons implements Serializable {
 	
 	public static final String photos71 = "photos71";
 	public static final String src = "src";
@@ -88,6 +88,10 @@ public class Load implements Serializable {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	
+	
+	
 	
 	
 }

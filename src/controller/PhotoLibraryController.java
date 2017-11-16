@@ -16,9 +16,9 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Album;
-import model.User;
-public class PhotoLibraryController
+import model.*;
+
+public class PhotoLibraryController extends DataPlusButtons
 {
 	@FXML
 	Button quitButton, logoutButton, addAlbumButton, deleteAlbumButton, renameButton, searchButton;
@@ -55,28 +55,7 @@ public class PhotoLibraryController
 			}
 		});
 	}
-	@FXML
-	private void quitProgram(ActionEvent event)
-	{
-		Stage stage = (Stage)quitButton.getScene().getWindow();
-		stage.close();
-	}
-	@FXML
-	private void logout(ActionEvent event) throws IOException
-	{
-		Stage stage;
-		stage = (Stage)logoutButton.getScene().getWindow();
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("/view/login.fxml"));
-		VBox root = (VBox)loader.load();
-		LoginController controller = loader.getController();
-		controller.start(stage);
-		stage.setResizable(true);
-		stage.setTitle("Photo Library");
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-	}
+	
 	@FXML
 	private void search(ActionEvent event) throws IOException
 	{

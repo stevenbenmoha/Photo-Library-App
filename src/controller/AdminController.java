@@ -24,7 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-public class AdminController extends Load
+public class AdminController extends DataPlusButtons
 {
 	@FXML
 	Button  createUserButton, deleteUserButton, add;
