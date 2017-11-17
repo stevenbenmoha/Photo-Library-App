@@ -154,10 +154,10 @@ public class PhotoLibraryController extends DataPlusButtons
 							try {
 
 								Stage stage;
-								stage = (Stage) searchButton.getScene().getWindow();
+								stage = (Stage)logoutButton.getScene().getWindow();
 								FXMLLoader loader = new FXMLLoader();
 								loader.setLocation(getClass().getResource("/view/photo.fxml"));
-								VBox root = (VBox) loader.load();
+								VBox root = (VBox)loader.load();
 								PhotoController controller = loader.getController();
 								controller.start(stage);
 								stage.setResizable(true);

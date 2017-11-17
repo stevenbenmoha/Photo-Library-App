@@ -33,7 +33,7 @@ public class DataPlusButtons implements Serializable {
 	public static File userFile = new File("src\\model\\userListFile.dat");
 	
 	@FXML
-	protected Button quitButton, logoutButton, searchButton;
+	protected Button quitButton, logoutButton, searchButton, returnToAlbumsButton;
 	
 	protected static ObservableList<User> userList = FXCollections.observableArrayList();
 	
@@ -41,13 +41,13 @@ public class DataPlusButtons implements Serializable {
 	
 		
 	@FXML
-	public void quitProgram(ActionEvent event)
+	protected void quitProgram(ActionEvent event)
 	{
 		Stage stage = (Stage)quitButton.getScene().getWindow();
 		stage.close();
 	}
 	@FXML
-	public void logout(ActionEvent event) throws IOException
+	protected void logout(ActionEvent event) throws IOException
 	{
 		Stage stage;
 		stage = (Stage)logoutButton.getScene().getWindow();
@@ -79,6 +79,23 @@ public class DataPlusButtons implements Serializable {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+
+	@FXML
+	protected void returnToAlbums(ActionEvent event) throws IOException {
+		
+	  Stage stage;
+	  stage = (Stage)logoutButton.getScene().getWindow(); 
+	  FXMLLoader loader = new FXMLLoader();
+	  loader.setLocation(getClass().getResource("/view/main.fxml"));
+	  VBox root = (VBox)loader.load();
+	  PhotoLibraryController controller = loader.getController();
+	  controller.start(stage);
+	  stage.setResizable(true);
+	  stage.setTitle("Photo Library"); Scene scene = new Scene(root);
+	  stage.setScene(scene); stage.show();
+	  }
+
 	
 
 	
@@ -163,8 +180,6 @@ public class DataPlusButtons implements Serializable {
 	        }
 		
 	}
-	
-	
 	
 	
 	
