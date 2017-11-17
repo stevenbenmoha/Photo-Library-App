@@ -32,7 +32,9 @@ public class DataPlusButtons implements Serializable {
 	public static final String currentUser = "currentUserFile.dat";
 	
 	protected static User u;
+	protected static Album a;
 	public static File albumFile;
+	public static File currentAlbumFile;
 	public static File userFile = new File("src\\model\\userListFile.dat");
 	public static File currentUserFile = new File("src\\model\\currentUserFile.dat");
 	
@@ -44,6 +46,8 @@ public class DataPlusButtons implements Serializable {
 	protected static ObservableList<User> userList = FXCollections.observableArrayList();
 	
 	protected static ObservableList<Album> photoLibrary = FXCollections.observableArrayList();
+	
+	protected static ObservableList<Photo> photoAlbum = FXCollections.observableArrayList();
 	
 		
 	@FXML
@@ -148,7 +152,7 @@ public class DataPlusButtons implements Serializable {
 	
 	public static ObservableList<Album> readAlbumFile(User u) {
 		
-		albumFile = new File("src\\model\\userdata\\"+u.getName()+"Albums.dat");
+		albumFile = new File("src\\model\\userdata\\"+u.getName()+" 's Albums.dat");
 		
 		
 		if (albumFile.exists() && !getFileExtension(albumFile).equals("txt") ) {
@@ -171,10 +175,10 @@ public class DataPlusButtons implements Serializable {
         return FXCollections.observableList(photoLibrary);
     }
 	
-	public static void writeAlbum(User u, ObservableList<Album> userPhotoLibrary) {
+	public static void writeUsersAlbums(User u, ObservableList<Album> userPhotoLibrary) {
 		 try {
 			 
-			 	File albumFile = new File("src\\model\\userdata\\"+u.getName()+"Albums.dat");
+			 	File albumFile = new File("src\\model\\userdata\\"+u.getName()+" 's Albums.dat");
 			 	albumFile.createNewFile(); // if file already exists will do nothing 
 			 	FileOutputStream output = new FileOutputStream(albumFile, false);
 			 
@@ -230,6 +234,63 @@ public class DataPlusButtons implements Serializable {
     return null;
 	
 }
+	
+	public static void writeCurrentAlbum(User u, Album a, ObservableList<Photo> albumPhotos) {
+		 try {
+			 
+			 	File currentAlbumFile = new File("src\\model\\userdata\\"+u.getName()+"-"+ a.albumName + ".dat");
+			 	currentAlbumFile.createNewFile(); // if file already exists will do nothing 
+			 	FileOutputStream output = new FileOutputStream(currentAlbumFile, false);
+			 
+	            // write object to files
+	            ObjectOutputStream oos = new ObjectOutputStream(output);
+	            oos.writeObject(new ArrayList<Photo>(albumPhotos));
+	            oos.close();
+
+
+	        } catch (FileNotFoundException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		
+	}
+	
+	public static ObservableList<Photo> readCurrentAlbumFile(User u, Album a) {
+		
+		currentAlbumFile = new File("src\\model\\userdata\\"+u.getName()+"-"+ a.albumName + ".dat");
+		
+		
+		if (currentAlbumFile.exists() && !getFileExtension(currentAlbumFile).equals("txt") ) {
+		
+		 try {
+            
+			 FileInputStream input = new FileInputStream(currentAlbumFile); 
+			 
+            ObjectInputStream ois = new ObjectInputStream(input);
+            ArrayList<Photo> albumPhotos = (ArrayList<Photo>) ois.readObject();
+            return FXCollections.observableList(albumPhotos);
+            
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		}
+		
+        return FXCollections.observableList(photoAlbum);
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	private static String getFileExtension(File file) {
         String fileName = file.getName();

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
@@ -69,7 +70,11 @@
 							<content>
 								<AnchorPane id="photoDisplayPanel" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="444.0">
 									<children>
-										<Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Photos" textAlignment="CENTER" wrapText="false" />
+                              <TilePane fx:id="tileDisplay" layoutY="60.0" prefHeight="485.0" prefWidth="444.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+										<Label fx:id="greeting" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="161.0" style="&#10;" text="Pictures in" textAlignment="CENTER" textFill="#8a8a8a" wrapText="false">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font></Label>
 									</children>
 								</AnchorPane>
 							</content>

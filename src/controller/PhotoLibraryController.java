@@ -117,7 +117,7 @@ public class PhotoLibraryController extends DataPlusButtons
 								
 				Album album = new Album(name.get());
 				u.userPhotoLibrary.add(album);
-				writeAlbum(u,u.userPhotoLibrary);
+				writeUsersAlbums(u,u.userPhotoLibrary);
 				break;
 			}
 			populateAlbums();
@@ -144,13 +144,15 @@ public class PhotoLibraryController extends DataPlusButtons
 
 		for (Album a : u.userPhotoLibrary) {
 			ImageView imageView;
-			imageView = createImageView(image);
+			imageView = createImageView(image, a);
 			tileDisplay.getChildren().addAll(imageView);
+				
+			
 		}
 
 	}
 
-	public ImageView createImageView(final File imageFile) {
+	public ImageView createImageView(final File imageFile, Album a) {
 
 		ImageView imageView = null;
 		try {
@@ -160,22 +162,26 @@ public class PhotoLibraryController extends DataPlusButtons
 			imageView.setCursor(Cursor.HAND);
 			imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				
-				
+								
 				@Override
 				public void handle(MouseEvent mouseEvent) {
 					
 				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 						
 						if (mouseEvent.getClickCount() == 2) {
+							
+							writeCurrentAlbum(u,a, a.albumPhotos);
+							
 							try {
-
+								
+								
 								Stage stage;
 								stage = (Stage)logoutButton.getScene().getWindow();
 								FXMLLoader loader = new FXMLLoader();
 								loader.setLocation(getClass().getResource("/view/photo.fxml"));
 								VBox root = (VBox)loader.load();
 								PhotoController controller = loader.getController();
-								controller.start(stage);
+								controller.start(stage, a);
 								stage.setResizable(true);
 								stage.setTitle("Photo Library");
 								Scene scene = new Scene(root);
@@ -190,6 +196,10 @@ public class PhotoLibraryController extends DataPlusButtons
 
 						}
 					}
+				
+					if(mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+						
+				}	
 				}
 			});
 		}
