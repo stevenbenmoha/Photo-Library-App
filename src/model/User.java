@@ -2,14 +2,20 @@ package model;
 
 import java.io.Serializable;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class User implements Comparable<Object>, Serializable {
+	
 	public String username;
 	public String photoLibraryID;
+	public static ObservableList<Album> userPhotoLibrary = FXCollections.observableArrayList();
+	
 	public User(String username, String ID)
 	{
 		this.username = username;
 		this.photoLibraryID = ID;
-		PhotoLibrary userPhotoLibrary = new PhotoLibrary(ID);
+		userPhotoLibrary = FXCollections.observableArrayList();
 	}
 	public String getName()
 	{

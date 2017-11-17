@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 import controller.*;
@@ -28,9 +29,14 @@ public class DataPlusButtons implements Serializable {
 	public static final String model = "model";
 	public static final String userListFile = "userListFile.dat";
 	public static final String photoLibraryFile = "photoLibraryFile.dat";
-			
-	public static File albumFile = new File("src\\model\\photoLibraryFile.dat");
+	public static final String currentUser = "currentUserFile.dat";
+	
+	protected static User u;
+	public static File albumFile;
 	public static File userFile = new File("src\\model\\userListFile.dat");
+	public static File currentUserFile = new File("src\\model\\currentUserFile.dat");
+	
+	
 	
 	@FXML
 	protected Button quitButton, logoutButton, searchButton, returnToAlbumsButton;
@@ -140,15 +146,20 @@ public class DataPlusButtons implements Serializable {
 }
 	
 	
-	public static ObservableList<Album> readAlbumFile() {
+	public static ObservableList<Album> readAlbumFile(User u) {
 		
-		if (albumFile.exists()) {
+		albumFile = new File("src\\model\\userdata\\"+u.getName()+"Albums.dat");
+		
+		
+		if (albumFile.exists() && !getFileExtension(albumFile).equals("txt") ) {
 		
 		 try {
             
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(src+ File.separator+ model + File.separator + photoLibraryFile));
-            ArrayList<Album> photoLibrary = (ArrayList<Album>) ois.readObject();
-            return FXCollections.observableList(photoLibrary);
+			 FileInputStream input = new FileInputStream(albumFile); 
+			 
+            ObjectInputStream ois = new ObjectInputStream(input);
+            ArrayList<Album> userPhotoLibrary = (ArrayList<Album>) ois.readObject();
+            return FXCollections.observableList(userPhotoLibrary);
             
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -160,16 +171,16 @@ public class DataPlusButtons implements Serializable {
         return FXCollections.observableList(photoLibrary);
     }
 	
-	public static void writeAlbum(ObservableList<Album> photoLibrary) {
+	public static void writeAlbum(User u, ObservableList<Album> userPhotoLibrary) {
 		 try {
 			 
-			 		 
+			 	File albumFile = new File("src\\model\\userdata\\"+u.getName()+"Albums.dat");
 			 	albumFile.createNewFile(); // if file already exists will do nothing 
 			 	FileOutputStream output = new FileOutputStream(albumFile, false);
 			 
 	            // write object to files
 	            ObjectOutputStream oos = new ObjectOutputStream(output);
-	            oos.writeObject(new ArrayList<Album>(photoLibrary));
+	            oos.writeObject(new ArrayList<Album>(userPhotoLibrary));
 	            oos.close();
 
 
@@ -181,7 +192,53 @@ public class DataPlusButtons implements Serializable {
 		
 	}
 	
+	public static void writeCurrentUser(User u) {
+		 try {
+			 	
+			 	currentUserFile.createNewFile(); // if file already exists will do nothing 
+			 	FileOutputStream output = new FileOutputStream(currentUserFile, false);
+			 	
+	            // write object to files
+	            ObjectOutputStream oos = new ObjectOutputStream(output);
+	            oos.writeObject(u);
+	            oos.close();
+
+
+	        } catch (FileNotFoundException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		
+	}
 	
+	public static User readCurrentUserFile() {
+		
+		
+		 try {
+            
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(src+ File.separator+ model + File.separator + currentUser));
+            User u = (User) ois.readObject();
+            return u;
+            
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }		
+		
+    return null;
+	
+}
+	
+	private static String getFileExtension(File file) {
+        String fileName = file.getName();
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
+        	//System.out.println(fileName.substring(fileName.lastIndexOf(".")+1));
+        
+        return fileName.substring(fileName.lastIndexOf(".")+1);}
+        else return "";
+    }
 	
 	
 }

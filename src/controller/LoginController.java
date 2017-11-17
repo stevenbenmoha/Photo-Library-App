@@ -68,8 +68,10 @@ public class LoginController extends DataPlusButtons
 		for(User u : userList)
 		{
 			if(usernameTextField.getText().equals(u.username))
-			{
+			{	
+				
 				valid = true;
+				writeCurrentUser(u);
 				stage = (Stage)loginButton.getScene().getWindow();
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(getClass().getResource("/view/main.fxml"));

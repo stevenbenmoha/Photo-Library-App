@@ -43,9 +43,11 @@ public class PhotoLibraryController extends DataPlusButtons
 	
 	
 	public void start(Stage primaryStage)
-	{
-		// greeting.setText(u.username + greeting.getText());
-		photoLibrary = readAlbumFile();
+	{	
+		
+		u = readCurrentUserFile();
+		greeting.setText(u.username + greeting.getText());
+		u.userPhotoLibrary = readAlbumFile(u);
 		populateAlbums();
 		quitButton.setOnAction(this::quitProgram);
 		addAlbumButton.setOnAction(this::addAlbum);
@@ -99,9 +101,23 @@ public class PhotoLibraryController extends DataPlusButtons
 					alert.showAndWait();
 					continue;
 				}
+				
+				for(Album a : u.userPhotoLibrary)
+				{
+					if(name.get().trim().equals(a.albumName))
+					{
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Duplicate Information");
+						alert.setHeaderText("Duplicate album name");
+						alert.setContentText("That album name already exists, please choose a different one");
+						alert.showAndWait();
+						return;
+					}		
+				}	
+								
 				Album album = new Album(name.get());
-				photoLibrary.add(album);
-				writeAlbum(photoLibrary);
+				u.userPhotoLibrary.add(album);
+				writeAlbum(u,u.userPhotoLibrary);
 				break;
 			}
 			populateAlbums();
@@ -126,7 +142,7 @@ public class PhotoLibraryController extends DataPlusButtons
 
 		File image = new File(path);
 
-		for (Album a : photoLibrary) {
+		for (Album a : u.userPhotoLibrary) {
 			ImageView imageView;
 			imageView = createImageView(image);
 			tileDisplay.getChildren().addAll(imageView);
