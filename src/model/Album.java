@@ -3,19 +3,20 @@ import java.io.Serializable;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
  
  
 public class Album implements Comparable<Object>, Serializable
 {
 	public String albumName;
-	public static ObservableList<Photo> albumPhotos = FXCollections.observableArrayList();
+	public static ObservableList<Image> albumPhotos = FXCollections.observableArrayList();
 	public Album(String s)
 	{
 		this.albumName = s;
 		albumPhotos = FXCollections.observableArrayList();
 	}
 	
-	public ObservableList<Photo> getAlbum()
+	public ObservableList<Image> getAlbum()
 	{
 		return albumPhotos;
 	}

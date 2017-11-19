@@ -47,7 +47,7 @@ public class PhotoLibraryController extends DataPlusButtons
 		
 		u = readCurrentUserFile();
 		greeting.setText(u.username + greeting.getText());
-		u.userPhotoLibrary = readAlbumFile(u);
+		u.userPhotoLibrary = readUsersAlbumsFile(u);
 		populateAlbums();
 		quitButton.setOnAction(this::quitProgram);
 		addAlbumButton.setOnAction(this::addAlbum);
@@ -170,7 +170,7 @@ public class PhotoLibraryController extends DataPlusButtons
 						
 						if (mouseEvent.getClickCount() == 2) {
 							
-							writeCurrentAlbum(u,a, a.albumPhotos);
+							// writeCurrentAlbum(u,a, a.albumPhotos);
 							
 							try {
 								
