@@ -5,8 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.sun.prism.paint.Color;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,6 +18,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -27,9 +27,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.*;
-
-
+import model.Album;
+import model.DataPlusButtons;
 public class PhotoLibraryController extends DataPlusButtons
 {
 	@FXML
@@ -40,11 +39,8 @@ public class PhotoLibraryController extends DataPlusButtons
 	Label greeting;
 	@FXML
 	TilePane tileDisplay;
-	
-	
 	public void start(Stage primaryStage)
-	{	
-		
+	{
 		u = readCurrentUserFile();
 		greeting.setText(u.username + greeting.getText());
 		u.userPhotoLibrary = readUsersAlbumsFile(u);
@@ -73,12 +69,7 @@ public class PhotoLibraryController extends DataPlusButtons
 				e.printStackTrace();
 			}
 		});
-		
-		
-		
-		
 	}
-	
 	@FXML
 	private void addAlbum(ActionEvent event)
 	{
@@ -101,7 +92,6 @@ public class PhotoLibraryController extends DataPlusButtons
 					alert.showAndWait();
 					continue;
 				}
-				
 				for(Album a : u.userPhotoLibrary)
 				{
 					if(name.get().trim().equals(a.albumName))
@@ -112,12 +102,11 @@ public class PhotoLibraryController extends DataPlusButtons
 						alert.setContentText("That album name already exists, please choose a different one");
 						alert.showAndWait();
 						return;
-					}		
-				}	
-								
+					}
+				}
 				Album album = new Album(name.get());
 				u.userPhotoLibrary.add(album);
-				writeUsersAlbums(u,u.userPhotoLibrary);
+				writeUsersAlbums(u, u.userPhotoLibrary);
 				break;
 			}
 			populateAlbums();
@@ -125,56 +114,48 @@ public class PhotoLibraryController extends DataPlusButtons
 		catch(NoSuchElementException e)
 		{
 		}
-		
-		}
-	
+	}
 	@FXML
-	private void populateAlbums() {
-
+	private void populateAlbums()
+	{
 		tileDisplay.getChildren().clear();
-
 		String path = "src" + "/model" + "/folder_img.png";
 		;
-
 		tileDisplay.setPadding(new Insets(15, 15, 15, 15));
 		tileDisplay.setHgap(15);
 		tileDisplay.setVgap(15);
-
 		File image = new File(path);
-
-		for (Album a : u.userPhotoLibrary) {
+		for(Album a : u.userPhotoLibrary)
+		{
 			ImageView imageView;
 			imageView = createImageView(image, a);
 			tileDisplay.getChildren().addAll(imageView);
-				
-			
 		}
-
 	}
-
-	public ImageView createImageView(final File imageFile, Album a) {
-
+	public ImageView createImageView(final File imageFile, Album a)
+	{
 		ImageView imageView = null;
-		try {
+		try
+		{
 			final Image image = new Image(new FileInputStream(imageFile), 100, 0, true, true);
 			imageView = new ImageView(image);
 			imageView.setFitWidth(100);
 			imageView.setCursor(Cursor.HAND);
-			imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				
-								
+			imageView.setOnMouseClicked(new EventHandler<MouseEvent>()
+			{
 				@Override
-				public void handle(MouseEvent mouseEvent) {
-					
-				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-						
-						if (mouseEvent.getClickCount() == 2) {
-							
+				public void handle(MouseEvent mouseEvent)
+				{
+					if(mouseEvent.getButton().equals(MouseButton.PRIMARY))
+					{
+						if(mouseEvent.getClickCount() == 1)
+						{
+						}
+						if(mouseEvent.getClickCount() == 2)
+						{
 							// writeCurrentAlbum(u,a, a.albumPhotos);
-							
-							try {
-								
-								
+							try
+							{
 								Stage stage;
 								stage = (Stage)logoutButton.getScene().getWindow();
 								FXMLLoader loader = new FXMLLoader();
@@ -188,26 +169,22 @@ public class PhotoLibraryController extends DataPlusButtons
 								stage.setScene(scene);
 								stage.show();
 							}
-
-							catch (IOException e) {
-
+							catch(IOException e)
+							{
 								e.printStackTrace();
 							}
-
 						}
 					}
-				
-					if(mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-						
-				}	
+					if(mouseEvent.getButton().equals(MouseButton.SECONDARY))
+					{
+					}
 				}
 			});
 		}
-
-		catch (FileNotFoundException ex) {
+		catch(FileNotFoundException ex)
+		{
 			ex.printStackTrace();
 		}
 		return imageView;
 	}
-	
 }

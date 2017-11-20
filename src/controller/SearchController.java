@@ -1,7 +1,6 @@
 package controller;
 import java.io.IOException;
 import java.io.Serializable;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,18 +11,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.*;
-
 public class SearchController extends DataPlusButtons
 {
 	@FXML
-	Button  createAlbumFromResultsButton, searchDateButton,
-			searchTagButton;
+	Button createAlbumFromResultsButton, searchDateButton, searchTagButton;
 	@FXML
 	TextField searchTextField;
 	@FXML
 	AnchorPane searchPanel, resultsPanel;
-	
-	
 	public void start(Stage primaryStage)
 	{
 		quitButton.setOnAction(this::quitProgram);
@@ -38,7 +33,6 @@ public class SearchController extends DataPlusButtons
 				e.printStackTrace();
 			}
 		});
-		
 		returnToAlbumsButton.setOnAction(event ->
 		{
 			try
@@ -50,11 +44,5 @@ public class SearchController extends DataPlusButtons
 				e.printStackTrace();
 			}
 		});
-		
-		
 	}
-	
-
-	
-
 }

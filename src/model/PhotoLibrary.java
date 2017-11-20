@@ -1,6 +1,5 @@
 package model;
 import java.io.Serializable;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 public class PhotoLibrary implements Comparable<Object>, Serializable

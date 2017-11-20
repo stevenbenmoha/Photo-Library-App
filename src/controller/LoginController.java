@@ -1,7 +1,5 @@
 package controller;
-
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,38 +12,43 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.DataPlusButtons;
 import model.User;
-
-public class LoginController extends DataPlusButtons {
+public class LoginController extends DataPlusButtons
+{
 	@FXML
 	Button loginButton;
 	@FXML
 	TextField usernameTextField;
-
-	public void start(Stage primaryStage) {
-
-		userList = readUserFile(); 			// Deserializes .dat file contained in model\\userdata\\users and updates list of users
+	public void start(Stage primaryStage)
+	{
+		userList = readUserFile(); // Deserializes .dat file contained in model\\userdata\\users and updates list
+									// of users
 		usernameTextField.setEditable(true);
 		quitButton.setOnAction(this::quitProgram);
-		loginButton.setOnAction(event -> {
-			try {
+		loginButton.setOnAction(event ->
+		{
+			try
+			{
 				goToDestination(event);
-			} catch (IOException e) {
+			}
+			catch(IOException e)
+			{
 				e.printStackTrace();
 			}
 		});
 	}
-
 	@FXML
-	private void goToDestination(ActionEvent event) throws IOException {
+	private void goToDestination(ActionEvent event) throws IOException
+	{
 		Stage stage;
 		boolean valid = false;
 		// Parent root;
-		if (usernameTextField.getText().equals("admin")) {   // Checks if admin is logging in
+		if(usernameTextField.getText().equals("admin"))
+		{ // Checks if admin is logging in
 			valid = true;
-			stage = (Stage) loginButton.getScene().getWindow();
+			stage = (Stage)loginButton.getScene().getWindow();
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/view/admin.fxml"));
-			VBox root = (VBox) loader.load();
+			VBox root = (VBox)loader.load();
 			AdminController controller = loader.getController();
 			controller.start(stage);
 			stage.setResizable(true);
@@ -54,15 +57,16 @@ public class LoginController extends DataPlusButtons {
 			stage.setScene(scene);
 			stage.show();
 		}
-		for (User u : userList) {
-			if (usernameTextField.getText().equals(u.username)) {	// Checks if username is in the array
-
+		for(User u : userList)
+		{
+			if(usernameTextField.getText().equals(u.username))
+			{ // Checks if username is in the array
 				valid = true;
 				writeCurrentUser(u);
-				stage = (Stage) loginButton.getScene().getWindow();
+				stage = (Stage)loginButton.getScene().getWindow();
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(getClass().getResource("/view/main.fxml"));
-				VBox root = (VBox) loader.load();
+				VBox root = (VBox)loader.load();
 				PhotoLibraryController controller = loader.getController();
 				controller.start(stage);
 				stage.setResizable(true);
@@ -72,7 +76,8 @@ public class LoginController extends DataPlusButtons {
 				stage.show();
 			}
 		}
-		if (!valid) {
+		if(!valid)
+		{
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Login failed");
 			alert.setHeaderText("Login failed");
@@ -81,12 +86,10 @@ public class LoginController extends DataPlusButtons {
 			usernameTextField.setText("");
 		}
 	}
-
 	@FXML
-	public void quitProgram(ActionEvent event) {
-		
-		Stage stage = (Stage) quitButton.getScene().getWindow();
+	public void quitProgram(ActionEvent event)
+	{
+		Stage stage = (Stage)quitButton.getScene().getWindow();
 		stage.close();
 	}
-
 }
