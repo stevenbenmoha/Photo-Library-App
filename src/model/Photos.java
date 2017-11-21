@@ -7,6 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 public class Photos extends Application
 {
+	private String caption;
 	@Override
 	public void start(Stage primaryStage)
 	{
@@ -27,6 +28,32 @@ public class Photos extends Application
 		{
 			e.printStackTrace();
 		}
+	}
+	public class Tag
+	{
+		private String tag;
+		private String tagValue;
+		public Tag(String tag, String val)
+		{
+			this.tag = tag;
+			this.tagValue = val;
+		}
+		public String getTag()
+		{
+			return tag;
+		}
+		public String getTagValue()
+		{
+			return tagValue;
+		}
+	}
+	public String getCaption()
+	{
+		return caption;
+	}
+	public void setCaption(String s)
+	{
+		this.caption = s;
 	}
 	public static void main(String[] args)
 	{

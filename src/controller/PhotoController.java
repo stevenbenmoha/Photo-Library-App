@@ -1,6 +1,7 @@
 package controller;
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,12 +27,15 @@ import model.DataPlusButtons;
 public class PhotoController extends DataPlusButtons
 {
 	@FXML
-	Button addPhotoButton, addEditCaptionButton, removePhotoButton, tagPhotoButton, deleteTagButton;
+	Button addPhotoButton, removePhotoButton, deleteTagButton, saveChangesButton, editPhotoInfoButton;
+	@FXML
+	TextField editCaptionTextField, editTagNameTextField, editTagValueTextField, editPhotoDateTextField;
 	@FXML
 	TilePane tileDisplay;
 	@FXML
 	Label greeting;
 	Album current;
+	Calendar curTime;
 	public void start(Stage primaryStage, Album a)
 	{
 		current = a;
@@ -42,7 +47,13 @@ public class PhotoController extends DataPlusButtons
 		{
 			addPhoto(event, a);
 		});
+		saveChangesButton.setOnAction(this::saveChanges);
 		quitButton.setOnAction(this::quitProgram);
+		editPhotoInfoButton.setOnAction(this::editPhotoInfo);
+		editCaptionTextField.setDisable(true);
+		editTagNameTextField.setDisable(true);
+		editTagValueTextField.setDisable(true);
+		editPhotoDateTextField.setDisable(true);
 		logoutButton.setOnAction(event ->
 		{
 			try
@@ -66,6 +77,22 @@ public class PhotoController extends DataPlusButtons
 			}
 		});
 	}
+	@FXML
+	private void saveChanges(ActionEvent event)
+	{
+		editCaptionTextField.setDisable(true);
+		editTagNameTextField.setDisable(true);
+		editTagValueTextField.setDisable(true);
+		editPhotoDateTextField.setDisable(true);
+	}
+	@FXML
+	private void editPhotoInfo(ActionEvent event)
+	{
+		editCaptionTextField.setDisable(false);
+		editTagNameTextField.setDisable(false);
+		editTagValueTextField.setDisable(false);
+		editPhotoDateTextField.setDisable(false);
+	}
 	private void addPhoto(ActionEvent event, Album a)
 	{
 		Stage stage;
@@ -78,6 +105,8 @@ public class PhotoController extends DataPlusButtons
 			return;
 		}
 		Image image = new Image(file.toURI().toString());
+		curTime = Calendar.getInstance();
+		curTime.set(Calendar.MILLISECOND, 0);
 		// Photo photo = new Photo();
 		a.albumPhotos.add(image);
 		// writeCurrentAlbum(u,a,a.albumPhotos);
