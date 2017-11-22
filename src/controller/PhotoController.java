@@ -18,6 +18,8 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -42,7 +44,8 @@ public class PhotoController extends DataPlusButtons
 	@FXML
 	TextField editCaptionTextField, editTagNameTextField, editTagValueTextField, editPhotoDateTextField;
 	@FXML
-	TilePane tileDisplay;
+	ListView<String> photoList = new ListView<String>();
+	
 	@FXML
 	Label greeting;
 	Album current;
@@ -57,6 +60,9 @@ public class PhotoController extends DataPlusButtons
 		u = readCurrentUserFile();
 		a.albumPhotos = readCurrentAlbumFile(u, current);
 		// writeCurrentAlbum(u,current,a.albumPhotos);
+		
+		
+		photoList.setItems(a.albumPhotos);
 		
 		try {
 			populatePictures();
@@ -144,39 +150,80 @@ public class PhotoController extends DataPlusButtons
 	@FXML
 	private void populatePictures() throws FileNotFoundException
 	{ // same as populateAlbums() but with pictures
-		tileDisplay.getChildren().clear();
-		tileDisplay.setPadding(new Insets(15, 15, 15, 15));
-		tileDisplay.setHgap(15);
-		tileDisplay.setVgap(15);
 		
-		int num = 0;
-				
-		for(String i : current.albumPhotos)
-		{ 
-			ImageView imageView;			
-			decoder(i,("src\\model\\userdata\\albums\\"+current.getName()), ("src\\model\\userdata\\albums\\"+current.getName()+"\\-"+ num+".png"), num);			
-			imageView = createImageView(i, current, num);
-			tileDisplay.getChildren().addAll(imageView);
-			num++;
-			
-		}
-	}
-	public ImageView createImageView(String i, Album current, int num) throws FileNotFoundException
-	{
 		DropShadow dropShadow = new DropShadow();
 		dropShadow.setRadius(5.0);
 		dropShadow.setOffsetX(3.0);
 		dropShadow.setOffsetY(3.0);
 		dropShadow.setColor(Color.color(0.4, 0.5, 0.5));
 		
+		int num = 0;
+				
+		for(String i : current.albumPhotos)
+		{ 
+			//ImageView imageView;			
+			decoder(i,("src\\model\\userdata\\albums\\"+current.getName()), ("src\\model\\userdata\\albums\\"+current.getName()+"\\-"+ num+".png"), num);			
+			//imageView = createImageView(i, current, num);
+			num++;
+			
+		}
+				
+			photoList.setCellFactory(param -> new ListCell<String>()
+			{
+				private ImageView imageView = new ImageView();
+				
+				@Override
+				public void updateItem(String j, boolean empty)
+				{
+					super.updateItem(j, empty);
+					if(empty)
+					{
+						setText(null);
+						setGraphic(null);
+					}
+					else
+					{	
+						int num2 = 0;
+						
+						for (String i : current.albumPhotos) {			
+						
+							
+							
+						String path = "src\\model\\userdata\\albums\\"+current.getName()+"\\-"+ num2+".png";
+						Image image;
+						try {
+							image = new Image(new FileInputStream(path));
+							imageView.setImage(image);
+							imageView.setFitWidth(50);
+							imageView.setFitHeight(50);
+							imageView.setEffect(dropShadow);
+							setGraphic(imageView);
+							num2++;
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						}
+						
+											
+					}
+				}
+			});
+			
+		}			
+	
+
+			
+	public ImageView createImageView(String i, Album current, int num) throws FileNotFoundException
+	{
+		
 		String path = "src\\model\\userdata\\albums\\"+current.getName()+"\\-"+ num+".png";
 		
 		final Image image = new Image(new FileInputStream(path));
 	
 		final ImageView imageView = new ImageView(image);
-		imageView.setFitWidth(100);
-		imageView.setFitHeight(100);
-		imageView.setEffect(dropShadow);
+		
+		
 		imageView.setCursor(Cursor.HAND);
 		imageView.setOnMouseClicked(new EventHandler<MouseEvent>()
 		{
@@ -219,6 +266,12 @@ public class PhotoController extends DataPlusButtons
 			}
 		});
 		return imageView;
+	}
+	
+	public Image createImage() {
+		
+		
+		return null;
 	}
 	
 		
