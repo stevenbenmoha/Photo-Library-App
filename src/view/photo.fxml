@@ -13,8 +13,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="600.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/9"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoController">
+<VBox prefHeight="600.0" prefWidth="541.0"
+	xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.PhotoController">
 	<children>
 		<TitledPane animated="false" maxHeight="-Infinity"
 			maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
@@ -66,6 +67,20 @@
 								<Button id="logoutButton" fx:id="logoutButton" layoutX="27.0"
 									layoutY="497.0" mnemonicParsing="false" prefHeight="41.0"
 									prefWidth="164.0" text="Logout">
+									<font>
+										<Font name="System Bold" size="16.0" />
+									</font>
+								</Button>
+								<Button fx:id="copyPhotoButton" layoutX="27.0"
+									layoutY="341.0" mnemonicParsing="false" prefHeight="41.0"
+									prefWidth="164.0" text="Copy Photo">
+									<font>
+										<Font name="System Bold" size="16.0" />
+									</font>
+								</Button>
+								<Button fx:id="movePhotoButton" layoutX="29.0"
+									layoutY="409.0" mnemonicParsing="false" prefHeight="41.0"
+									prefWidth="164.0" text="Move Photo">
 									<font>
 										<Font name="System Bold" size="16.0" />
 									</font>

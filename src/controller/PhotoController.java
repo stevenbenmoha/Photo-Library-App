@@ -41,10 +41,12 @@ import model.User;
  * @author Steven Benmoha, Colin Ackerley
  *
  */
+@SuppressWarnings("serial")
 public class PhotoController extends DataPlusButtons
 {
 	@FXML
-	Button addPhotoButton, removePhotoButton, deleteTagButton, saveChangesButton, editPhotoInfoButton;
+	Button addPhotoButton, removePhotoButton, deleteTagButton, saveChangesButton, editPhotoInfoButton, copyPhotoButton,
+			movePhotoButton;
 	@FXML
 	TextField editCaptionTextField, editTagNameTextField, editTagValueTextField, editPhotoDateTextField;
 	@FXML
@@ -62,14 +64,16 @@ public class PhotoController extends DataPlusButtons
 	 * 
 	 *             Starts the inside-album view and controls functionality
 	 */
-	@SuppressWarnings("static-access")
 	public void start(Stage primaryStage, Album a) throws FileNotFoundException
 	{
+		deleteTagButton.setOnAction(this::deleteTag);
+		copyPhotoButton.setOnAction(this::copyPhoto);
+		movePhotoButton.setOnAction(this::movePhoto);
 		current = a;
 		u = readCurrentUserFile();
-		a.albumPhotos = readCurrentAlbumFile(u, current);
+		Album.albumPhotos = readCurrentAlbumFile(u, current);
 		updateList();
-		photoList.setItems(a.realPhotos);
+		photoList.setItems(Album.realPhotos);
 		photoList.getSelectionModel().selectFirst();
 		removePhotoButton.setOnAction(arg0 ->
 		{
@@ -155,6 +159,30 @@ public class PhotoController extends DataPlusButtons
 	 *             Saves changes to caption/tag info
 	 */
 	@FXML
+	/**
+	 * @param ActionEvent
+	 */
+	private void movePhoto(ActionEvent e)
+	{
+	}
+	@FXML
+	/**
+	 * @param ActionEvent
+	 */
+	private void copyPhoto(ActionEvent e)
+	{
+	}
+	@FXML
+	/**
+	 * @param ActionEvent
+	 */
+	private void deleteTag(ActionEvent e)
+	{
+		Photo cur = photoList.getSelectionModel().getSelectedItem();
+		cur.setTagName("");
+		cur.setTagValue("");
+	}
+	@FXML
 	private void saveChanges(ActionEvent event) throws FileNotFoundException
 	{
 		boolean validDate = false;
@@ -229,11 +257,11 @@ public class PhotoController extends DataPlusButtons
 		Optional<ButtonType> result = alert.showAndWait();
 		if(result.get() == ButtonType.OK)
 		{
-			a.albumPhotos.remove(photoList.getSelectionModel().getSelectedItem().binary);
+			Album.albumPhotos.remove(photoList.getSelectionModel().getSelectedItem().binary);
 			updateList();
-			a.realPhotos.remove(photoList.getSelectionModel().getSelectedItem());
-			writeCurrentAlbum(u, current, a.albumPhotos);
-			if(a.realPhotos.isEmpty())
+			Album.realPhotos.remove(photoList.getSelectionModel().getSelectedItem());
+			writeCurrentAlbum(u, current, Album.albumPhotos);
+			if(Album.realPhotos.isEmpty())
 				removePhotoButton.setDisable(true);
 		}
 	}
@@ -259,8 +287,8 @@ public class PhotoController extends DataPlusButtons
 		String path = file.getAbsolutePath();
 		path.substring(1);
 		String img = encoder(path);
-		a.albumPhotos.add(img);
-		writeCurrentAlbum(u, current, a.albumPhotos);
+		Album.albumPhotos.add(img);
+		writeCurrentAlbum(u, current, Album.albumPhotos);
 		updateList();
 		populatePictures();
 	}
@@ -353,9 +381,9 @@ public class PhotoController extends DataPlusButtons
 	 */
 	public void updateList() throws FileNotFoundException
 	{
-		a.realPhotos.clear();
+		Album.realPhotos.clear();
 		int num = 0;
-		for(String i : a.albumPhotos)
+		for(String i : Album.albumPhotos)
 		{
 			decoder(i, ("src\\model\\userdata\\albums\\" + u.getName() + "\\" + current.getName()),
 					("src\\model\\userdata\\albums\\" + u.getName() + "\\" + current.getName() + "\\-" + num + ".png"),
@@ -367,7 +395,7 @@ public class PhotoController extends DataPlusButtons
 			curTime = Calendar.getInstance();
 			curTime.set(Calendar.MILLISECOND, 0);
 			photo.setDate(curTime);
-			a.realPhotos.add(photo);
+			Album.realPhotos.add(photo);
 			num++;
 		}
 	}
