@@ -47,14 +47,12 @@ public class PhotoLibraryController extends DataPlusButtons
 	TextField albumInfo;
 	@FXML
 	ListView<Album> albumList = new ListView<Album>();
-	
-	
 	User u;
 	/**
 	 * @param primaryStage
 	 * @throws FileNotFoundException
 	 * 
-	 * starts the album view page and controls functionality
+	 *             starts the album view page and controls functionality
 	 */
 	public void start(Stage primaryStage) throws FileNotFoundException
 	{
@@ -101,7 +99,7 @@ public class PhotoLibraryController extends DataPlusButtons
 	 * @param e
 	 * 
 	 * 
-	 * Deletes album from listview
+	 *            Deletes album from listview
 	 */
 	@FXML
 	private void deleteAlbum(ActionEvent e)
@@ -123,7 +121,7 @@ public class PhotoLibraryController extends DataPlusButtons
 	/**
 	 * @param e
 	 * 
-	 * Edits the selected album name
+	 *            Edits the selected album name
 	 */
 	@FXML
 	private void editAlbumName(ActionEvent e)
@@ -174,7 +172,7 @@ public class PhotoLibraryController extends DataPlusButtons
 	/**
 	 * @param event
 	 * 
-	 * Adds album to listview
+	 *            Adds album to listview
 	 */
 	@FXML
 	private void addAlbum(ActionEvent event)
@@ -224,7 +222,7 @@ public class PhotoLibraryController extends DataPlusButtons
 	/**
 	 * @throws FileNotFoundException
 	 * 
-	 * Populates listview with albums
+	 *             Populates listview with albums
 	 */
 	@FXML
 	private void populateAlbums() throws FileNotFoundException
@@ -297,7 +295,6 @@ public class PhotoLibraryController extends DataPlusButtons
 				}
 				catch(Exception e)
 				{
-					e.printStackTrace();
 				}
 			}
 		});

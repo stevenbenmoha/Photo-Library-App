@@ -13,15 +13,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="600.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoController">
+<VBox prefHeight="600.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/9"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoController">
 	<children>
-		<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="899.0" text="Photo Library">
+		<TitledPane animated="false" maxHeight="-Infinity"
+			maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+			prefHeight="601.0" prefWidth="899.0" text="Photo Library">
 			<content>
-				<SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefWidth="900.0">
+				<SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512"
+					focusTraversable="true" prefWidth="900.0">
 					<items>
 						<AnchorPane id="optionsPanel" prefWidth="196.0">
 							<children>
-								<Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="82.0" style="&#10;" text="Options" textAlignment="CENTER" wrapText="false">
+								<Label alignment="CENTER" layoutX="14.0" layoutY="14.0"
+									minWidth="60.0" prefWidth="82.0" style="&#10;" text="Options"
+									textAlignment="CENTER" wrapText="false">
 									<font>
 										<Font size="18.0" />
 									</font>
@@ -29,80 +35,109 @@
 										<Color blue="0.624" green="0.624" red="0.624" />
 									</textFill>
 								</Label>
-								<Button id="addPhotoButton" fx:id="addPhotoButton" layoutX="27.0" layoutY="62.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Add photo">
+								<Button id="addPhotoButton" fx:id="addPhotoButton"
+									layoutX="27.0" layoutY="62.0" mnemonicParsing="false"
+									prefHeight="41.0" prefWidth="164.0" text="Add photo">
 									<font>
 										<Font name="System Bold" size="16.0" />
 									</font>
 								</Button>
-								<Button id="removePhotoButton" fx:id="removePhotoButton" layoutX="27.0" layoutY="137.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Remove photo">
+								<Button id="removePhotoButton" fx:id="removePhotoButton"
+									layoutX="27.0" layoutY="137.0" mnemonicParsing="false"
+									prefHeight="41.0" prefWidth="164.0" text="Remove photo">
 									<font>
 										<Font name="System Bold" size="16.0" />
 									</font>
 								</Button>
-								<Button id="deleteTagButton" fx:id="deleteTagButton" layoutX="27.0" layoutY="207.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Delete tag">
+								<Button id="deleteTagButton" fx:id="deleteTagButton"
+									layoutX="27.0" layoutY="207.0" mnemonicParsing="false"
+									prefHeight="41.0" prefWidth="164.0" text="Delete tag">
 									<font>
 										<Font name="System Bold" size="16.0" />
 									</font>
 								</Button>
-								<Button id="returnToAlbumButton" fx:id="returnToAlbumsButton" layoutX="27.0" layoutY="276.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Return to albums">
+								<Button id="returnToAlbumButton" fx:id="returnToAlbumsButton"
+									layoutX="27.0" layoutY="276.0" mnemonicParsing="false"
+									prefHeight="41.0" prefWidth="164.0" text="Return to albums">
 									<font>
 										<Font name="System Bold" size="16.0" />
 									</font>
 								</Button>
-								<Button id="logoutButton" fx:id="logoutButton" layoutX="27.0" layoutY="497.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="164.0" text="Logout">
+								<Button id="logoutButton" fx:id="logoutButton" layoutX="27.0"
+									layoutY="497.0" mnemonicParsing="false" prefHeight="41.0"
+									prefWidth="164.0" text="Logout">
 									<font>
 										<Font name="System Bold" size="16.0" />
 									</font>
 								</Button>
 							</children>
 						</AnchorPane>
-						<ScrollPane prefWidth="442.0" SplitPane.resizableWithParent="true">
+						<ScrollPane prefWidth="442.0"
+							SplitPane.resizableWithParent="true">
 							<content>
-								<AnchorPane id="photoDisplayPanel" minHeight="-1.0" minWidth="-1.0" prefWidth="446.0">
+								<AnchorPane id="photoDisplayPanel" minHeight="-1.0"
+									minWidth="-1.0" prefWidth="446.0">
 									<children>
-										<Label fx:id="greeting" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="257.0" style="&#10;" text="Pictures in" textFill="#8a8a8a" wrapText="false">
+										<Label fx:id="greeting" alignment="CENTER" layoutX="14.0"
+											layoutY="14.0" prefHeight="50.0" prefWidth="257.0" style="&#10;"
+											text="Pictures in" textFill="#8a8a8a" wrapText="false">
 											<font>
 												<Font size="18.0" />
 											</font>
 										</Label>
-                              <ListView fx:id="photoList" layoutX="2.0" layoutY="74.0" maxHeight="1.7976931348623157E308" prefHeight="469.0" prefWidth="439.0" />
+										<ListView fx:id="photoList" layoutX="2.0" layoutY="74.0"
+											maxHeight="1.7976931348623157E308" prefHeight="469.0"
+											prefWidth="439.0" />
 									</children>
 								</AnchorPane>
 							</content>
 						</ScrollPane>
 						<AnchorPane id="detailsPanel">
 							<children>
-								<Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" wrapText="false" />
-								<TextField fx:id="editCaptionTextField" alignment="CENTER" layoutX="36.0" layoutY="111.0" promptText="Edit caption" />
-								<TextField fx:id="editTagNameTextField" alignment="CENTER" layoutX="36.0" layoutY="179.0" promptText="Edit tag name" />
-								<TextField fx:id="editTagValueTextField" alignment="CENTER" layoutX="36.0" layoutY="259.0" promptText="Edit tag value" />
-								<TextField fx:id="editPhotoDateTextField" alignment="CENTER" layoutX="36.0" layoutY="339.0" promptText="Photo Date" />
-								<Text disable="true" layoutX="81.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caption">
+								<Label alignment="CENTER" layoutX="14.0" layoutY="14.0"
+									style="&#10;" text="Details" textAlignment="CENTER" wrapText="false" />
+								<TextField fx:id="editCaptionTextField" alignment="CENTER"
+									layoutX="36.0" layoutY="111.0" promptText="Caption" />
+								<TextField fx:id="editTagNameTextField" alignment="CENTER"
+									layoutX="36.0" layoutY="179.0" promptText="Tag name" />
+								<TextField fx:id="editTagValueTextField" alignment="CENTER"
+									layoutX="36.0" layoutY="259.0" promptText="Tag value" />
+								<TextField fx:id="editPhotoDateTextField" alignment="CENTER"
+									layoutX="36.0" layoutY="339.0" promptText="Photo Date" />
+								<Text disable="true" layoutX="81.0" layoutY="97.0"
+									strokeType="OUTSIDE" strokeWidth="0.0" text="Caption">
 									<font>
 										<Font name="System Bold" size="16.0" />
 									</font>
 								</Text>
-								<Text disable="true" layoutX="74.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tag name">
+								<Text disable="true" layoutX="74.0" layoutY="166.0"
+									strokeType="OUTSIDE" strokeWidth="0.0" text="Tag name">
 									<font>
 										<Font name="System Bold" size="16.0" />
 									</font>
 								</Text>
-								<Text disable="true" layoutX="74.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tag value">
+								<Text disable="true" layoutX="74.0" layoutY="247.0"
+									strokeType="OUTSIDE" strokeWidth="0.0" text="Tag value">
 									<font>
 										<Font name="System Bold" size="16.0" />
 									</font>
 								</Text>
-								<Text disable="true" layoutX="69.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Photo date">
+								<Text disable="true" layoutX="69.0" layoutY="328.0"
+									strokeType="OUTSIDE" strokeWidth="0.0" text="Photo date">
 									<font>
 										<Font name="System Bold" size="16.0" />
 									</font>
 								</Text>
-								<Button fx:id="saveChangesButton" layoutX="34.0" layoutY="428.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="154.0" text="Save changes">
+								<Button fx:id="saveChangesButton" layoutX="34.0" layoutY="428.0"
+									mnemonicParsing="false" prefHeight="15.0" prefWidth="154.0"
+									text="Save changes">
 									<font>
 										<Font name="System Bold" size="16.0" />
 									</font>
 								</Button>
-								<Button fx:id="editPhotoInfoButton" layoutX="34.0" layoutY="483.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="154.0" text="Edit Photo Info">
+								<Button fx:id="editPhotoInfoButton" layoutX="34.0"
+									layoutY="483.0" mnemonicParsing="false" prefHeight="15.0"
+									prefWidth="154.0" text="Edit Photo Info">
 									<font>
 										<Font name="System Bold" size="16.0" />
 									</font>
@@ -113,7 +148,8 @@
 				</SplitPane>
 			</content>
 			<graphic>
-				<Button id="quitButton" fx:id="quitButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Quit" textFill="#d32626">
+				<Button id="quitButton" fx:id="quitButton" mnemonicParsing="false"
+					prefHeight="25.0" prefWidth="54.0" text="Quit" textFill="#d32626">
 					<font>
 						<Font name="System Bold" size="12.0" />
 					</font>
