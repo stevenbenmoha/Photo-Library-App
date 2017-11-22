@@ -60,12 +60,12 @@
 							<content>
 								<AnchorPane id="photoDisplayPanel" minHeight="-1.0" minWidth="-1.0" prefWidth="446.0">
 									<children>
-										<Label fx:id="greeting" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="161.0" style="&#10;" text="Pictures in" textAlignment="CENTER" textFill="#8a8a8a" wrapText="false">
+										<Label fx:id="greeting" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="257.0" style="&#10;" text="Pictures in" textFill="#8a8a8a" wrapText="false">
 											<font>
 												<Font size="18.0" />
 											</font>
 										</Label>
-                              <ListView fx:id="photoList" layoutY="60.0" maxHeight="1.7976931348623157E308" prefWidth="446.0" />
+                              <ListView fx:id="photoList" layoutX="2.0" layoutY="74.0" maxHeight="1.7976931348623157E308" prefHeight="469.0" prefWidth="439.0" />
 									</children>
 								</AnchorPane>
 							</content>
