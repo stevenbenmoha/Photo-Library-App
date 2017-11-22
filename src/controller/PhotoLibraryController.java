@@ -5,26 +5,27 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import com.sun.prism.paint.Color;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Album;
@@ -38,8 +39,8 @@ public class PhotoLibraryController extends DataPlusButtons
 	@FXML
 	Label greeting;
 	@FXML
-	TilePane tileDisplay;
-	public void start(Stage primaryStage)
+	ListView<Album> mainView;
+	public void start(Stage primaryStage) throws FileNotFoundException
 	{
 		u = readCurrentUserFile();
 		greeting.setText(u.username + greeting.getText());
@@ -111,26 +112,42 @@ public class PhotoLibraryController extends DataPlusButtons
 			}
 			populateAlbums();
 		}
-		catch(NoSuchElementException e)
+		catch(NoSuchElementException | FileNotFoundException e)
 		{
 		}
 	}
 	@FXML
-	private void populateAlbums()
+	private void populateAlbums() throws FileNotFoundException
 	{
-		tileDisplay.getChildren().clear();
+		ListView<String> albums = new ListView<String>();
+		ObservableList<String> albumNames = FXCollections.observableArrayList();
+		albums.setItems(albumNames);
 		String path = "src" + "/model" + "/folder_img.png";
-		;
-		tileDisplay.setPadding(new Insets(15, 15, 15, 15));
-		tileDisplay.setHgap(15);
-		tileDisplay.setVgap(15);
-		File image = new File(path);
+		File file = new File(path);
+		final Image folderIcon;
+		folderIcon = new Image(new FileInputStream(file), 100, 0, true, true);
 		for(Album a : u.userPhotoLibrary)
 		{
-			ImageView imageView;
-			imageView = createImageView(image, a);
-			tileDisplay.getChildren().addAll(imageView);
+			albumNames.add(a.getName());
 		}
+		albums.setCellFactory(param -> new ListCell<String>()
+		{
+			private ImageView imageView = new ImageView();
+			@Override
+			public void updateItem(String name, boolean empty)
+			{
+				super.updateItem(name, empty);
+				if(empty)
+				{
+					setText(null);
+					setGraphic(null);
+				}
+				else
+				{
+					imageView.setImage(folderIcon);
+				}
+			}
+		});
 	}
 	public ImageView createImageView(final File imageFile, Album a)
 	{
