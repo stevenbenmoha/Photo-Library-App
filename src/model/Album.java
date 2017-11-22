@@ -3,6 +3,8 @@
  */
 package model;
 import java.io.Serializable;
+import java.nio.file.Path;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 @SuppressWarnings("serial")
@@ -10,6 +12,9 @@ public class Album implements Comparable<Object>, Serializable
 {
 	public String albumName;
 	public static ObservableList<String> albumPhotos = FXCollections.observableArrayList();
+	
+	public static ObservableList<Photo> realPhotos = FXCollections.observableArrayList();
+	
 	/**
 	 * 
 	 * @param String
@@ -20,6 +25,7 @@ public class Album implements Comparable<Object>, Serializable
 	{
 		this.albumName = s;
 		albumPhotos = FXCollections.observableArrayList();
+		realPhotos = FXCollections.observableArrayList();
 	}
 	/**
 	 * @return ObservableList representing the current album

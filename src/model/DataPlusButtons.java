@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Base64;
 import controller.LoginController;
@@ -34,6 +35,9 @@ public class DataPlusButtons implements Serializable
 	protected static ObservableList<User> userList = FXCollections.observableArrayList();
 	protected static ObservableList<Album> photoLibrary = FXCollections.observableArrayList();
 	protected static ObservableList<String> photoAlbum = FXCollections.observableArrayList();
+	
+	protected static ObservableList<Path> pictureLocations = FXCollections.observableArrayList();
+	
 	@FXML
 	protected void quitProgram(ActionEvent event)
 	{
@@ -131,8 +135,7 @@ public class DataPlusButtons implements Serializable
 	}
 	@SuppressWarnings("resource")
 	public static ObservableList<Album> readUsersAlbumsFile(User u)
-	{ // Deserializes .dat file containing user's list of albums and updates
-		// ObservableList
+	{ 
 		albumFile = new File("src\\model\\userdata\\albums\\" + u.getName() + " 's Albums.dat");
 		if(albumFile.exists() && !getFileExtension(albumFile).equals("txt"))
 		{

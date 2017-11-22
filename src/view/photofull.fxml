@@ -63,7 +63,7 @@
                      </font>
                   </Button>
                   <ImageView fx:id="bigPicture" fitHeight="380.0" fitWidth="601.0" layoutX="159.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="nextButton" layoutX="589.0" layoutY="509.0" mnemonicParsing="false" text="Next Picture &gt;">
+                  <Button fx:id="nextPicture" layoutX="589.0" layoutY="509.0" mnemonicParsing="false" text="Next Picture &gt;">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

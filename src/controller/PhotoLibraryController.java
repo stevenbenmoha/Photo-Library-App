@@ -43,6 +43,8 @@ public class PhotoLibraryController extends DataPlusButtons
 	TextField albumInfo;
 	@FXML
 	ListView<Album> albumList = new ListView<Album>();
+	
+	
 	User u;
 	public void start(Stage primaryStage) throws FileNotFoundException
 	{
@@ -53,8 +55,8 @@ public class PhotoLibraryController extends DataPlusButtons
 		primaryStage.setMaxWidth(900);
 		greeting.setText(u.username + greeting.getText());
 		deleteAlbumButton.setDisable(true);
-		User.userPhotoLibrary = readUsersAlbumsFile(u);
-		albumList.setItems(User.userPhotoLibrary);
+		u.userPhotoLibrary = readUsersAlbumsFile(u);
+		albumList.setItems(u.userPhotoLibrary);
 		populateAlbums();
 		quitButton.setOnAction(this::quitProgram);
 		addAlbumButton.setOnAction(this::addAlbum);

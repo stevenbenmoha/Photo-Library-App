@@ -1,4 +1,5 @@
 package controller;
+
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,46 +11,55 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.*;
-public class PhotoDisplayController extends DataPlusButtons
-{
+
+public class PhotoDisplayController extends DataPlusButtons {
 	@FXML
 	ImageView bigPicture;
 	@FXML
-	Button returnToAlbumButton;
-	public void start(Stage primaryStage, Album current, Image currentImg)
-	{
-		bigPicture.setImage(currentImg);
+	Button returnToAlbumButton, previousPicture, nextPicture;
+
+	Photo pic;
+
+	int length = a.realPhotos.size();
+
+	public void start(Stage primaryStage, Album current, Photo p) {
+
+		pic = p;
+		bigPicture.setImage(p.image);
 		quitButton.setOnAction(this::quitProgram);
-		logoutButton.setOnAction(event ->
-		{
-			try
-			{
+		logoutButton.setOnAction(event -> {
+			try {
 				logout(event);
-			}
-			catch(IOException e)
-			{
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		});
-		returnToAlbumButton.setOnAction(event ->
-		{
-			try
-			{
+		returnToAlbumButton.setOnAction(event -> {
+			try {
 				returnToCurrentAlbum(event, current);
-			}
-			catch(IOException e)
-			{
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		});
+		
+		nextPicture.setOnAction(event -> {
+			pic = nextPic(event);			
+			
+		});
+		previousPicture.setOnAction(event -> {
+			pic = prevPic(event);			
+		});
+
+			
+		
 	}
-	protected void returnToCurrentAlbum(ActionEvent event, Album current) throws IOException
-	{
+
+	protected void returnToCurrentAlbum(ActionEvent event, Album current) throws IOException {
 		Stage stage;
-		stage = (Stage)logoutButton.getScene().getWindow();
+		stage = (Stage) logoutButton.getScene().getWindow();
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/view/photo.fxml"));
-		VBox root = (VBox)loader.load();
+		VBox root = (VBox) loader.load();
 		PhotoController controller = loader.getController();
 		controller.start(stage, current);
 		stage.setResizable(true);
@@ -57,5 +67,43 @@ public class PhotoDisplayController extends DataPlusButtons
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+	}
+
+	@FXML
+	public Photo nextPic(ActionEvent event) {
+
+		if ((a.realPhotos.indexOf(pic) + 1) == length) {
+			
+			return pic;
+		}
+
+		else {
+
+			int newIndex = a.realPhotos.indexOf(pic) + 1;
+
+			bigPicture.setImage(a.realPhotos.get(newIndex).image);
+
+			return a.realPhotos.get(newIndex);
+		}
+	}
+
+	@FXML
+	public Photo prevPic(ActionEvent event) {
+
+		if ((a.realPhotos.indexOf(pic)) == 0) {
+			
+			return pic;
+		}
+
+		else {
+
+			int newIndex = a.realPhotos.indexOf(pic) - 1;
+
+			bigPicture.setImage(a.realPhotos.get(newIndex).image);
+
+			return a.realPhotos.get(newIndex);
+
+		}
+
 	}
 }

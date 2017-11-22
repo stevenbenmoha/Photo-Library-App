@@ -3,8 +3,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,13 +34,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Album;
 import model.DataPlusButtons;
+import model.Photo;
 import model.User;
+
 public class PhotoController extends DataPlusButtons
 {
 	@FXML
@@ -38,21 +51,35 @@ public class PhotoController extends DataPlusButtons
 	@FXML
 	TextField editCaptionTextField, editTagNameTextField, editTagValueTextField, editPhotoDateTextField;
 	@FXML
-	ListView<String> photoList = new ListView<String>();
+	ListView<Photo> photoList = new ListView<Photo>();
+	
+	
 	@FXML
 	Label greeting;
 	Album current;
 	Calendar curTime;
 	User u;
+	
+	int num;
+	
 	@SuppressWarnings("static-access")
-	public void start(Stage primaryStage, Album a)
+	public void start(Stage primaryStage, Album a) throws FileNotFoundException
 	{
 		current = a;
 		u = readCurrentUserFile();
 		a.albumPhotos = readCurrentAlbumFile(u, current);
-		removePhotoButton.setOnAction(this::deletePhoto);
-		// writeCurrentAlbum(u,current,a.albumPhotos);
-		photoList.setItems(a.albumPhotos);
+		updateList();		
+		photoList.setItems(a.realPhotos);
+		photoList.getSelectionModel().selectFirst();
+		
+		removePhotoButton.setOnAction(arg0 -> {
+			try {
+				deletePhoto(arg0);
+			} catch (FileNotFoundException e2) {
+				e2.printStackTrace();
+			}
+		});
+			
 		try
 		{
 			populatePictures();
@@ -73,9 +100,17 @@ public class PhotoController extends DataPlusButtons
 				e.printStackTrace();
 			}
 		});
-		saveChangesButton.setOnAction(this::saveChanges);
+		saveChangesButton.setOnAction(event -> {
+			try {
+				saveChanges(event);
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		});
 		quitButton.setOnAction(this::quitProgram);
-		editPhotoInfoButton.setOnAction(this::editPhotoInfo);
+		editPhotoInfoButton.setOnAction(event -> {
+			editPhotoInfo(event);
+		});
 		editCaptionTextField.setDisable(true);
 		editTagNameTextField.setDisable(true);
 		editTagValueTextField.setDisable(true);
@@ -102,17 +137,47 @@ public class PhotoController extends DataPlusButtons
 				e.printStackTrace();
 			}
 		});
+		
+		
+		photoList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Photo>()
+		{
+			public void changed(ObservableValue<? extends Photo> ov, Photo oldPhoto, Photo newPhoto)
+			{
+				//photoList.getSelectionModel().getSelectedItem().setCaption(photoList.getSelectionModel().getSelectedItem().caption);
+				//photoList.getSelectionModel().getSelectedItem().setTagName(photoList.getSelectionModel().getSelectedItem().tag);
+				//photoList.getSelectionModel().getSelectedItem().setTagValue(photoList.getSelectionModel().getSelectedItem().tagValue);		
+							
+			}
+		});
+		
 	}
 	@FXML
-	private void saveChanges(ActionEvent event)
+	private void saveChanges(ActionEvent event) throws FileNotFoundException
 	{
 		editCaptionTextField.setDisable(true);
 		editTagNameTextField.setDisable(true);
 		editTagValueTextField.setDisable(true);
 		editPhotoDateTextField.setDisable(true);
+		
+		saveInfo(photoList.getSelectionModel().getSelectedItem());
+		
+				
 	}
+	
+	
+	@FXML
+	private void editPhotoInfo(ActionEvent event)
+	{
+		editCaptionTextField.setDisable(false);
+		editTagNameTextField.setDisable(false);
+		editTagValueTextField.setDisable(false);
+		editPhotoDateTextField.setDisable(false);
+				
+		
+	}
+	
 	@SuppressWarnings("static-access")
-	private void deletePhoto(ActionEvent event)
+	private void deletePhoto(ActionEvent event) throws FileNotFoundException
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirm Deletion");
@@ -121,19 +186,18 @@ public class PhotoController extends DataPlusButtons
 		Optional<ButtonType> result = alert.showAndWait();
 		if(result.get() == ButtonType.OK)
 		{
-			a.albumPhotos.remove(photoList.getSelectionModel().getSelectedItem());
-			if(a.albumPhotos.isEmpty())
+			
+			a.albumPhotos.remove(photoList.getSelectionModel().getSelectedItem().binary);
+			updateList();
+			a.realPhotos.remove(photoList.getSelectionModel().getSelectedItem());
+			
+			writeCurrentAlbum(u, current, a.albumPhotos);
+	
+			if(a.realPhotos.isEmpty())
 				removePhotoButton.setDisable(true);
 		}
 	}
-	@FXML
-	private void editPhotoInfo(ActionEvent event)
-	{
-		editCaptionTextField.setDisable(false);
-		editTagNameTextField.setDisable(false);
-		editTagValueTextField.setDisable(false);
-		editPhotoDateTextField.setDisable(false);
-	}
+	
 	@SuppressWarnings("static-access")
 	private void addPhoto(ActionEvent event, Album a) throws IOException
 	{
@@ -149,76 +213,52 @@ public class PhotoController extends DataPlusButtons
 		String path = file.getAbsolutePath();
 		path.substring(1);
 		String img = encoder(path);
+		
 		curTime = Calendar.getInstance();
 		curTime.set(Calendar.MILLISECOND, 0);
-		// Photo photo = new Photo();
 		a.albumPhotos.add(img);
 		writeCurrentAlbum(u, current, a.albumPhotos);
+		updateList();
 		populatePictures();
 	}
 	@FXML
 	private void populatePictures() throws FileNotFoundException
-	{ // same as populateAlbums() but with pictures
+	{ 
 		DropShadow dropShadow = new DropShadow();
 		dropShadow.setRadius(5.0);
 		dropShadow.setOffsetX(3.0);
 		dropShadow.setOffsetY(3.0);
 		dropShadow.setColor(Color.color(0.4, 0.5, 0.5));
-		int num = 0;
-		for(String i : current.albumPhotos)
-		{
-			// ImageView imageView;
-			decoder(i, ("src\\model\\userdata\\albums\\" + current.getName()),
-					("src\\model\\userdata\\albums\\" + current.getName() + "\\-" + num + ".png"), num);
-			// imageView = createImageView(i, current, num);
-			num++;
-		}
-		photoList.setCellFactory(param -> new ListCell<String>()
+	
+		
+		photoList.setCellFactory(param -> new ListCell<Photo>()
 		{
 			private ImageView imageView = new ImageView();
 			@Override
-			public void updateItem(String j, boolean empty)
+			public void updateItem(Photo p, boolean empty)
 			{
-				super.updateItem(j, empty);
+				super.updateItem(p, empty);
 				if(empty)
 				{
 					setText(null);
 					setGraphic(null);
 				}
 				else
-				{
-					int num2 = 0;
-					for(String i : current.albumPhotos)
-					{
-						String path = "src\\model\\userdata\\albums\\" + current.getName() + "\\-" + num2 + ".png";
-						Image image;
-						try
-						{
-							image = new Image(new FileInputStream(path));
-							imageView.setImage(image);
+				{				
+					        imageView.setImage(p.image);
 							imageView.setFitWidth(50);
 							imageView.setFitHeight(50);
 							imageView.setEffect(dropShadow);
 							setGraphic(imageView);
-							num2++;
-						}
-						catch(FileNotFoundException e)
-						{
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						
+					
 					}
 				}
 			}
-		});
-	}
-	public ImageView createImageView(String i, Album current, int num) throws FileNotFoundException
-	{
-		String path = "src\\model\\userdata\\albums\\" + current.getName() + "\\-" + num + ".png";
-		final Image image = new Image(new FileInputStream(path));
-		final ImageView imageView = new ImageView(image);
-		imageView.setCursor(Cursor.HAND);
-		imageView.setOnMouseClicked(new EventHandler<MouseEvent>()
+		);
+		
+		photoList.setCursor(Cursor.HAND);
+		photoList.setOnMouseClicked(new EventHandler<MouseEvent>()
 		{
 			@Override
 			public void handle(MouseEvent mouseEvent)
@@ -227,7 +267,7 @@ public class PhotoController extends DataPlusButtons
 				{
 					if(mouseEvent.getClickCount() == 1)
 					{
-						imageView.setEffect(new DropShadow(200, Color.SEAGREEN));
+						
 					}
 					if(mouseEvent.getClickCount() == 2)
 					{
@@ -240,7 +280,7 @@ public class PhotoController extends DataPlusButtons
 							loader.setLocation(getClass().getResource("/view/photofull.fxml"));
 							VBox root = (VBox)loader.load();
 							PhotoDisplayController controller = loader.getController();
-							controller.start(stage, current, image);
+							controller.start(stage, current, photoList.getSelectionModel().getSelectedItem());
 							stage.setResizable(true);
 							stage.setTitle("Photo Library");
 							Scene scene = new Scene(root);
@@ -258,10 +298,37 @@ public class PhotoController extends DataPlusButtons
 				}
 			}
 		});
-		return imageView;
+		
+		
+		
+		
 	}
-	public Image createImage()
+		
+	public void updateList() throws FileNotFoundException
 	{
-		return null;
+		a.realPhotos.clear();
+		
+		int num = 0;
+		for(String i : a.albumPhotos)
+		{					
+			decoder(i, ("src\\model\\userdata\\albums\\"+u.getName()+"\\" + current.getName()),
+					("src\\model\\userdata\\albums\\"+u.getName()+"\\" + current.getName() + "\\-" + num + ".png"), num);
+			String path = "src\\model\\userdata\\albums\\"+u.getName()+"\\"+ current.getName() + "\\-" + num + ".png";
+			Image image = new Image(new FileInputStream(path));
+			Photo photo = new Photo(image, num, i);
+			a.realPhotos.add(photo);			
+			num++;
+		}	
 	}
+	
+	public void saveInfo(Photo photo) {
+		
+		photo.setCaption(editCaptionTextField.getText());
+		photo.setTagName(editTagNameTextField.getText());
+		photo.setTagValue(editTagValueTextField.getText());
+				
+
+	}
+	
+	
 }

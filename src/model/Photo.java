@@ -14,33 +14,21 @@ public class Photo implements Serializable
 	public String name;
 	public String caption;
 	public Calendar date;
+	public String tag;
+	public String tagValue;
+
 
 	public Image image;
 	public int ID;
+	public String binary;
 	
-	public Photo(Image image, int ID){
+	public Photo(Image image, int ID, String binary){
 		
 		this.image = image;
 		this.ID = ID;
+		this.binary = binary;
 	}
 	
-		
-	public class Tag
-	{
-		private String tag;
-		private String tagValue;
-
-		/**
-		 * @param tag representing a tag to be created
-		 * @param val representing the value of the tag to be made
-		 */
-
-		public Tag(String tag, String val)
-		{
-			this.tag = tag;
-			this.tagValue = val;
-		}
-
 		/**
 		 * @return the current tag string
 		 */
@@ -59,8 +47,19 @@ public class Photo implements Serializable
 		{
 			return tagValue;
 		}
-	}
+		
 
+		public void setTagName(String s)
+		{
+			this.tag = s;
+		}
+		
+
+		public void setTagValue(String s)
+		{
+			this.tagValue = s;
+		}
+		
 	/**
 	 * @return the current caption 
 	 */
@@ -76,4 +75,6 @@ public class Photo implements Serializable
 	{
 		this.caption = s;
 	}
+	
+	
 }
