@@ -17,9 +17,9 @@
 	<children>
 		<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="899.0" text="Photo Library">
 			<content>
-				<SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="474.0" prefWidth="900.0">
+				<SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefWidth="900.0">
 					<items>
-						<AnchorPane id="optionsPanel" prefHeight="567.0" prefWidth="196.0">
+						<AnchorPane id="optionsPanel" prefWidth="196.0">
 							<children>
 								<Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="82.0" style="&#10;" text="Options" textAlignment="CENTER" wrapText="false">
 									<font>
@@ -56,16 +56,16 @@
 								</Button>
 							</children>
 						</AnchorPane>
-						<ScrollPane prefHeight="567.0" prefWidth="335.0">
+						<ScrollPane prefWidth="442.0" SplitPane.resizableWithParent="true">
 							<content>
-								<AnchorPane id="photoDisplayPanel" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="444.0">
+								<AnchorPane id="photoDisplayPanel" minHeight="-1.0" minWidth="-1.0" prefWidth="446.0">
 									<children>
 										<Label fx:id="greeting" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="161.0" style="&#10;" text="Pictures in" textAlignment="CENTER" textFill="#8a8a8a" wrapText="false">
 											<font>
 												<Font size="18.0" />
 											</font>
 										</Label>
-                              <ListView fx:id="photoList" layoutY="94.0" prefHeight="486.0" prefWidth="446.0" />
+                              <ListView fx:id="photoList" layoutY="60.0" maxHeight="1.7976931348623157E308" prefWidth="446.0" />
 									</children>
 								</AnchorPane>
 							</content>
