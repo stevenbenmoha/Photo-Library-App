@@ -32,8 +32,8 @@ public class DataPlusButtons implements Serializable
 	protected static Album a;
 	public static File albumFile;
 	public static File currentAlbumFile;
-	public static File userFile = new File("src\\model\\userdata\\users\\userListFile.dat");
-	public static File currentUserFile = new File("src\\model\\userdata\\users\\currentUserFile.dat");
+	public static File userFile = new File("src/model/userdata/users/userListFile.ser");
+	public static File currentUserFile = new File("src/model/userdata/users/currentUserFile.ser");
 	@FXML
 	protected Button quitButton, logoutButton, searchButton, returnToAlbumsButton;
 	protected static ObservableList<User> userList = FXCollections.observableArrayList();
@@ -202,7 +202,7 @@ public class DataPlusButtons implements Serializable
 	@SuppressWarnings("resource")
 	public static ObservableList<Album> readUsersAlbumsFile(User u)
 	{ 
-		albumFile = new File("src\\model\\userdata\\albums\\" + u.getName() + " 's Albums.dat");
+		albumFile = new File("src/model/userdata/albums/" + u.getName() + " 's Albums.ser");
 		if(albumFile.exists() && !getFileExtension(albumFile).equals("txt"))
 		{
 			try
@@ -239,7 +239,7 @@ public class DataPlusButtons implements Serializable
 	{ // Serializes user's list of albums into .dat file
 		try
 		{
-			File albumFile = new File("src\\model\\userdata\\albums\\" + u.getName() + " 's Albums.dat");
+			File albumFile = new File("src/model/userdata/albums/" + u.getName() + " 's Albums.ser");
 			albumFile.createNewFile(); // if file already exists will do nothing
 			FileOutputStream output = new FileOutputStream(albumFile, false);
 			// write object to files
@@ -331,7 +331,7 @@ public class DataPlusButtons implements Serializable
 		try
 		{
 			File currentAlbumFile = new File(
-					"src\\model\\userdata\\albums\\" + u.getName() + "-" + a.albumName + ".dat");
+					"src/model/userdata/albums/" + u.getName() + "-" + a.albumName + ".ser");
 			currentAlbumFile.createNewFile(); // if file already exists will do nothing
 			FileOutputStream output = new FileOutputStream(currentAlbumFile, false);
 			// write object to files
@@ -363,7 +363,7 @@ public class DataPlusButtons implements Serializable
 	
 	public static ObservableList<String> readCurrentAlbumFile(User u, Album a)
 	{
-		currentAlbumFile = new File("src\\model\\userdata\\albums\\" + u.getName() + "-" + a.albumName + ".dat");
+		currentAlbumFile = new File("src/model/userdata/albums/" + u.getName() + "-" + a.albumName + ".ser");
 		if(currentAlbumFile.exists() && !getFileExtension(currentAlbumFile).equals("txt"))
 		{
 			try
