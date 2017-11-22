@@ -30,6 +30,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Album;
 import model.DataPlusButtons;
+import model.User;
+
 public class PhotoLibraryController extends DataPlusButtons
 {
 	@FXML
@@ -39,12 +41,20 @@ public class PhotoLibraryController extends DataPlusButtons
 	@FXML
 	Label greeting;
 	@FXML
-	ListView<Album> mainView;
+	ListView<Album> albumList = new ListView<Album>();
+	
+	User u;
+	
 	public void start(Stage primaryStage) throws FileNotFoundException
-	{
+	{	
+		
 		u = readCurrentUserFile();
 		greeting.setText(u.username + greeting.getText());
 		u.userPhotoLibrary = readUsersAlbumsFile(u);
+		
+		
+		albumList.setItems(u.userPhotoLibrary);		
+		
 		populateAlbums();
 		quitButton.setOnAction(this::quitProgram);
 		addAlbumButton.setOnAction(this::addAlbum);
@@ -119,89 +129,78 @@ public class PhotoLibraryController extends DataPlusButtons
 	@FXML
 	private void populateAlbums() throws FileNotFoundException
 	{
-		ListView<String> albums = new ListView<String>();
-		ObservableList<String> albumNames = FXCollections.observableArrayList();
-		albums.setItems(albumNames);
+		
 		String path = "src" + "/model" + "/folder_img.png";
 		File file = new File(path);
 		final Image folderIcon;
-		folderIcon = new Image(new FileInputStream(file), 100, 0, true, true);
-		for(Album a : u.userPhotoLibrary)
-		{
-			albumNames.add(a.getName());
-		}
-		albums.setCellFactory(param -> new ListCell<String>()
+		folderIcon = new Image(new FileInputStream(file), 75, 0, true, true);
+				
+		albumList.setCellFactory(param -> new ListCell<Album>()
 		{
 			private ImageView imageView = new ImageView();
+			
 			@Override
-			public void updateItem(String name, boolean empty)
+			public void updateItem(Album a, boolean empty)
 			{
-				super.updateItem(name, empty);
+				super.updateItem(a, empty);
 				if(empty)
 				{
 					setText(null);
 					setGraphic(null);
 				}
 				else
-				{
+				{	
 					imageView.setImage(folderIcon);
+					setText(a.albumName);
+					setGraphic(imageView);
+										
 				}
 			}
 		});
-	}
-	public ImageView createImageView(final File imageFile, Album a)
-	{
-		ImageView imageView = null;
-		try
+		
+		albumList.setCursor(Cursor.HAND);				
+		albumList.setOnMouseClicked(new EventHandler<MouseEvent>()
 		{
-			final Image image = new Image(new FileInputStream(imageFile), 100, 0, true, true);
-			imageView = new ImageView(image);
-			imageView.setFitWidth(100);
-			imageView.setCursor(Cursor.HAND);
-			imageView.setOnMouseClicked(new EventHandler<MouseEvent>()
+			@Override
+			public void handle(MouseEvent mouseEvent)
 			{
-				@Override
-				public void handle(MouseEvent mouseEvent)
+				if(mouseEvent.getButton().equals(MouseButton.PRIMARY))
 				{
-					if(mouseEvent.getButton().equals(MouseButton.PRIMARY))
+					if(mouseEvent.getClickCount() == 1)
 					{
-						if(mouseEvent.getClickCount() == 1)
-						{
-						}
-						if(mouseEvent.getClickCount() == 2)
-						{
-							// writeCurrentAlbum(u,a, a.albumPhotos);
-							try
-							{
-								Stage stage;
-								stage = (Stage)logoutButton.getScene().getWindow();
-								FXMLLoader loader = new FXMLLoader();
-								loader.setLocation(getClass().getResource("/view/photo.fxml"));
-								VBox root = (VBox)loader.load();
-								PhotoController controller = loader.getController();
-								controller.start(stage, a);
-								stage.setResizable(true);
-								stage.setTitle("Photo Library");
-								Scene scene = new Scene(root);
-								stage.setScene(scene);
-								stage.show();
-							}
-							catch(IOException e)
-							{
-								e.printStackTrace();
-							}
-						}
 					}
-					if(mouseEvent.getButton().equals(MouseButton.SECONDARY))
+					if(mouseEvent.getClickCount() == 2)
 					{
+						Album a = albumList.getSelectionModel().getSelectedItem();
+						// writeCurrentAlbum(u,a, a.albumPhotos);
+						 
+						try
+						{
+							Stage stage;
+							stage = (Stage)logoutButton.getScene().getWindow();
+							FXMLLoader loader = new FXMLLoader();
+							loader.setLocation(getClass().getResource("/view/photo.fxml"));
+							VBox root = (VBox)loader.load();
+							PhotoController controller = loader.getController();
+							controller.start(stage, a);
+							stage.setResizable(true);
+							stage.setTitle("Photo Library");
+							Scene scene = new Scene(root);
+							stage.setScene(scene);
+							stage.show();
+						}
+						catch(IOException e)
+						{
+							e.printStackTrace();
+						}
 					}
 				}
-			});
-		}
-		catch(FileNotFoundException ex)
-		{
-			ex.printStackTrace();
-		}
-		return imageView;
+				if(mouseEvent.getButton().equals(MouseButton.SECONDARY))
+				{
+				}
+			}
+		});
+		
+		
 	}
 }

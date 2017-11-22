@@ -1,7 +1,14 @@
 package controller;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.Base64;
 import java.util.Calendar;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,6 +22,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
@@ -24,6 +34,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Album;
 import model.DataPlusButtons;
+import model.User;
 public class PhotoController extends DataPlusButtons
 {
 	@FXML
@@ -36,16 +47,30 @@ public class PhotoController extends DataPlusButtons
 	Label greeting;
 	Album current;
 	Calendar curTime;
+	
+	User u;
+	
 	public void start(Stage primaryStage, Album a)
 	{
+
 		current = a;
 		u = readCurrentUserFile();
-		// a.albumPhotos = readCurrentAlbumFile(u, a);
-		populatePictures();
+		a.albumPhotos = readCurrentAlbumFile(u, current);
+		// writeCurrentAlbum(u,current,a.albumPhotos);
+		
+		try {
+			populatePictures();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
 		greeting.setText(greeting.getText() + " " + a.albumName);
 		addPhotoButton.setOnAction((ActionEvent event) ->
 		{
-			addPhoto(event, a);
+			try {
+				addPhoto(event, a);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		});
 		saveChangesButton.setOnAction(this::saveChanges);
 		quitButton.setOnAction(this::quitProgram);
@@ -93,7 +118,7 @@ public class PhotoController extends DataPlusButtons
 		editTagValueTextField.setDisable(false);
 		editPhotoDateTextField.setDisable(false);
 	}
-	private void addPhoto(ActionEvent event, Album a)
+	private void addPhoto(ActionEvent event, Album a) throws IOException
 	{
 		Stage stage;
 		stage = (Stage)logoutButton.getScene().getWindow();
@@ -103,37 +128,52 @@ public class PhotoController extends DataPlusButtons
 		if(file == null)
 		{
 			return;
-		}
-		Image image = new Image(file.toURI().toString());
+		}		
+		
+		String path = file.getAbsolutePath();
+		path.substring(1);
+		String img = encoder(path);		
+		
 		curTime = Calendar.getInstance();
 		curTime.set(Calendar.MILLISECOND, 0);
 		// Photo photo = new Photo();
-		a.albumPhotos.add(image);
-		// writeCurrentAlbum(u,a,a.albumPhotos);
+		a.albumPhotos.add(img);
+		writeCurrentAlbum(u,current,a.albumPhotos);
 		populatePictures();
 	}
 	@FXML
-	private void populatePictures()
+	private void populatePictures() throws FileNotFoundException
 	{ // same as populateAlbums() but with pictures
 		tileDisplay.getChildren().clear();
 		tileDisplay.setPadding(new Insets(15, 15, 15, 15));
 		tileDisplay.setHgap(15);
 		tileDisplay.setVgap(15);
-		for(Image i : a.albumPhotos)
-		{ // iterate through the album's ObservableList of images
-			ImageView imageView;
-			imageView = createImageView(i, current);
+		
+		int num = 0;
+				
+		for(String i : current.albumPhotos)
+		{ 
+			ImageView imageView;			
+			decoder(i,("src\\model\\userdata\\albums\\"+current.getName()), ("src\\model\\userdata\\albums\\"+current.getName()+"\\-"+ num+".png"), num);			
+			imageView = createImageView(i, current, num);
 			tileDisplay.getChildren().addAll(imageView);
+			num++;
+			
 		}
 	}
-	public ImageView createImageView(Image i, Album current)
+	public ImageView createImageView(String i, Album current, int num) throws FileNotFoundException
 	{
 		DropShadow dropShadow = new DropShadow();
 		dropShadow.setRadius(5.0);
 		dropShadow.setOffsetX(3.0);
 		dropShadow.setOffsetY(3.0);
 		dropShadow.setColor(Color.color(0.4, 0.5, 0.5));
-		final ImageView imageView = new ImageView(i);
+		
+		String path = "src\\model\\userdata\\albums\\"+current.getName()+"\\-"+ num+".png";
+		
+		final Image image = new Image(new FileInputStream(path));
+	
+		final ImageView imageView = new ImageView(image);
 		imageView.setFitWidth(100);
 		imageView.setFitHeight(100);
 		imageView.setEffect(dropShadow);
@@ -160,7 +200,7 @@ public class PhotoController extends DataPlusButtons
 							loader.setLocation(getClass().getResource("/view/photofull.fxml"));
 							VBox root = (VBox)loader.load();
 							PhotoDisplayController controller = loader.getController();
-							controller.start(stage, current, i);
+							controller.start(stage, current, image);
 							stage.setResizable(true);
 							stage.setTitle("Photo Library");
 							Scene scene = new Scene(root);
@@ -180,4 +220,7 @@ public class PhotoController extends DataPlusButtons
 		});
 		return imageView;
 	}
+	
+		
+	
 }
