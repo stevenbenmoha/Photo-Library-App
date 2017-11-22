@@ -1,4 +1,5 @@
 package controller;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -49,43 +50,39 @@ import model.User;
  *
  */
 
-
-public class PhotoController extends DataPlusButtons
-{
+public class PhotoController extends DataPlusButtons {
 	@FXML
 	Button addPhotoButton, removePhotoButton, deleteTagButton, saveChangesButton, editPhotoInfoButton;
 	@FXML
 	TextField editCaptionTextField, editTagNameTextField, editTagValueTextField, editPhotoDateTextField;
 	@FXML
 	ListView<Photo> photoList = new ListView<Photo>();
-	
-	
+
 	@FXML
 	Label greeting;
 	Album current;
 	Calendar curTime;
 	User u;
-	
+
 	int num;
-	
+
 	/**
 	 * @param primaryStage
 	 * @param a
 	 * @throws FileNotFoundException
 	 * 
-	 * Starts the inside-album view and controls functionality
+	 *             Starts the inside-album view and controls functionality
 	 */
-	
+
 	@SuppressWarnings("static-access")
-	public void start(Stage primaryStage, Album a) throws FileNotFoundException
-	{
+	public void start(Stage primaryStage, Album a) throws FileNotFoundException {
 		current = a;
 		u = readCurrentUserFile();
 		a.albumPhotos = readCurrentAlbumFile(u, current);
-		updateList();		
+		updateList();
 		photoList.setItems(a.realPhotos);
 		photoList.getSelectionModel().selectFirst();
-		
+
 		removePhotoButton.setOnAction(arg0 -> {
 			try {
 				deletePhoto(arg0);
@@ -93,24 +90,17 @@ public class PhotoController extends DataPlusButtons
 				e2.printStackTrace();
 			}
 		});
-			
-		try
-		{
+
+		try {
 			populatePictures();
-		}
-		catch(FileNotFoundException e1)
-		{
+		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
 		greeting.setText(greeting.getText() + " " + a.albumName);
-		addPhotoButton.setOnAction((ActionEvent event) ->
-		{
-			try
-			{
+		addPhotoButton.setOnAction((ActionEvent event) -> {
+			try {
 				addPhoto(event, a);
-			}
-			catch(IOException e)
-			{
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		});
@@ -129,134 +119,113 @@ public class PhotoController extends DataPlusButtons
 		editTagNameTextField.setDisable(true);
 		editTagValueTextField.setDisable(true);
 		editPhotoDateTextField.setDisable(true);
-		logoutButton.setOnAction(event ->
-		{
-			try
-			{
+		logoutButton.setOnAction(event -> {
+			try {
 				logout(event);
-			}
-			catch(IOException e)
-			{
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		});
-		returnToAlbumsButton.setOnAction(event ->
-		{
-			try
-			{
+		returnToAlbumsButton.setOnAction(event -> {
+			try {
 				returnToAlbums(event);
-			}
-			catch(IOException e)
-			{
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		});
-		
-		
-		photoList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Photo>()
-		{
-			public void changed(ObservableValue<? extends Photo> ov, Photo oldPhoto, Photo newPhoto)
-			{
-				//photoList.getSelectionModel().getSelectedItem().setCaption(photoList.getSelectionModel().getSelectedItem().caption);
-				//photoList.getSelectionModel().getSelectedItem().setTagName(photoList.getSelectionModel().getSelectedItem().tag);
-				//photoList.getSelectionModel().getSelectedItem().setTagValue(photoList.getSelectionModel().getSelectedItem().tagValue);		
-							
+
+		photoList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Photo>() {
+			public void changed(ObservableValue<? extends Photo> ov, Photo oldPhoto, Photo newPhoto) {
+				
+				//photoList.getSelectionModel().getSelectedItem().setCaption(ov.caption);
+				// photoList.getSelectionModel().getSelectedItem().setTagName(newPhoto.tag);
+				// photoList.getSelectionModel().getSelectedItem().setTagValue(newPhoto.tagValue);
+
 			}
 		});
-		
+
 	}
-	
-	
-	
+
 	/**
 	 * @param event
 	 * @throws FileNotFoundException
 	 * 
-	 * Saves changes to caption/tag info
+	 *             Saves changes to caption/tag info
 	 */
 	@FXML
-	
-	
-	private void saveChanges(ActionEvent event) throws FileNotFoundException
-	{
+
+	private void saveChanges(ActionEvent event) throws FileNotFoundException {
 		editCaptionTextField.setDisable(true);
 		editTagNameTextField.setDisable(true);
 		editTagValueTextField.setDisable(true);
 		editPhotoDateTextField.setDisable(true);
-		
+
 		saveInfo(photoList.getSelectionModel().getSelectedItem());
-		
-				
+
 	}
-	
-	
+
 	/**
 	 * @param event
 	 * 
-	 * Enables editing of photo info such as captions/tags
+	 *            Enables editing of photo info such as captions/tags
 	 */
 	@FXML
-	private void editPhotoInfo(ActionEvent event)
-	{
+	private void editPhotoInfo(ActionEvent event) {
 		editCaptionTextField.setDisable(false);
 		editTagNameTextField.setDisable(false);
 		editTagValueTextField.setDisable(false);
 		editPhotoDateTextField.setDisable(false);
-				
-		
+
 	}
-	
+
 	/**
 	 * @param event
 	 * @throws FileNotFoundException
 	 * 
-	 * Deletes photo from listview and removes from observable lists (of type Photo and String)
+	 *             Deletes photo from listview and removes from observable lists (of
+	 *             type Photo and String)
 	 */
 	@SuppressWarnings("static-access")
-	private void deletePhoto(ActionEvent event) throws FileNotFoundException
-	{
+	private void deletePhoto(ActionEvent event) throws FileNotFoundException {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirm Deletion");
 		alert.setHeaderText("Confirm Deleting Photo");
 		alert.setContentText("Are you sure you want to delete this photo?");
 		Optional<ButtonType> result = alert.showAndWait();
-		if(result.get() == ButtonType.OK)
-		{
-			
+		if (result.get() == ButtonType.OK) {
+
 			a.albumPhotos.remove(photoList.getSelectionModel().getSelectedItem().binary);
 			updateList();
 			a.realPhotos.remove(photoList.getSelectionModel().getSelectedItem());
-			
+
 			writeCurrentAlbum(u, current, a.albumPhotos);
-	
-			if(a.realPhotos.isEmpty())
+
+			if (a.realPhotos.isEmpty())
 				removePhotoButton.setDisable(true);
 		}
 	}
-	
+
 	/**
 	 * @param event
 	 * @param a
 	 * @throws IOException
 	 * 
-	 * Adds photo to listview
+	 *             Adds photo to listview
 	 */
 	@SuppressWarnings("static-access")
-	private void addPhoto(ActionEvent event, Album a) throws IOException
-	{
+	private void addPhoto(ActionEvent event, Album a) throws IOException {
 		Stage stage;
-		stage = (Stage)logoutButton.getScene().getWindow();
+		stage = (Stage) logoutButton.getScene().getWindow();
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Choose Photo");
 		File file = fileChooser.showOpenDialog(stage);
-		if(file == null)
-		{
+		if (file == null) {
 			return;
 		}
 		String path = file.getAbsolutePath();
 		path.substring(1);
 		String img = encoder(path);
-		
+
 		curTime = Calendar.getInstance();
 		curTime.set(Calendar.MILLISECOND, 0);
 		a.albumPhotos.add(img);
@@ -264,69 +233,56 @@ public class PhotoController extends DataPlusButtons
 		updateList();
 		populatePictures();
 	}
+
 	/**
 	 * @throws FileNotFoundException
 	 * 
-	 * Populates listview with pictures from album
+	 *             Populates listview with pictures from album
 	 */
 	@FXML
-	private void populatePictures() throws FileNotFoundException
-	{ 
+	private void populatePictures() throws FileNotFoundException {
 		DropShadow dropShadow = new DropShadow();
 		dropShadow.setRadius(5.0);
 		dropShadow.setOffsetX(3.0);
 		dropShadow.setOffsetY(3.0);
 		dropShadow.setColor(Color.color(0.4, 0.5, 0.5));
-	
-		
-		photoList.setCellFactory(param -> new ListCell<Photo>()
-		{
+
+		photoList.setCellFactory(param -> new ListCell<Photo>() {
 			private ImageView imageView = new ImageView();
+
 			@Override
-			public void updateItem(Photo p, boolean empty)
-			{
+			public void updateItem(Photo p, boolean empty) {
 				super.updateItem(p, empty);
-				if(empty)
-				{
+				if (empty) {
 					setText(null);
 					setGraphic(null);
-				}
-				else
-				{				
-					        imageView.setImage(p.image);
-							imageView.setFitWidth(50);
-							imageView.setFitHeight(50);
-							imageView.setEffect(dropShadow);
-							setGraphic(imageView);
-						
-					
-					}
+				} else {
+					imageView.setImage(p.image);
+					imageView.setFitWidth(50);
+					imageView.setFitHeight(50);
+					imageView.setEffect(dropShadow);
+					setGraphic(imageView);
+
 				}
 			}
-		);
-		
+		});
+
 		photoList.setCursor(Cursor.HAND);
-		photoList.setOnMouseClicked(new EventHandler<MouseEvent>()
-		{
+		photoList.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
-			public void handle(MouseEvent mouseEvent)
-			{
-				if(mouseEvent.getButton().equals(MouseButton.PRIMARY))
-				{
-					if(mouseEvent.getClickCount() == 1)
-					{
-						
+			public void handle(MouseEvent mouseEvent) {
+				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+					if (mouseEvent.getClickCount() == 1) {
+
 					}
-					if(mouseEvent.getClickCount() == 2)
-					{
-						try
-						{
+					if (mouseEvent.getClickCount() == 2) {
+						try {
 							Stage stage;
-							stage = (Stage)logoutButton.getScene().getWindow(); // If you double click a picture, it
-																				// will
+							stage = (Stage) logoutButton.getScene().getWindow(); // If you double click a picture, it
+																					// will
 							FXMLLoader loader = new FXMLLoader(); // bring you to a larger pic display screen
 							loader.setLocation(getClass().getResource("/view/photofull.fxml"));
-							VBox root = (VBox)loader.load();
+							VBox root = (VBox) loader.load();
 							PhotoDisplayController controller = loader.getController();
 							controller.start(stage, current, photoList.getSelectionModel().getSelectedItem());
 							stage.setResizable(true);
@@ -334,61 +290,54 @@ public class PhotoController extends DataPlusButtons
 							Scene scene = new Scene(root);
 							stage.setScene(scene);
 							stage.show();
-						}
-						catch(IOException e)
-						{
+						} catch (IOException e) {
 							e.printStackTrace();
 						}
 					}
 				}
-				if(mouseEvent.getButton().equals(MouseButton.SECONDARY))
-				{
+				if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
 				}
 			}
 		});
-		
-		
-		
-		
+
 	}
-	
-	
+
 	/**
 	 * @throws FileNotFoundException
 	 * 
-	 * Creates observable list of photos from observable list of strings.
-	 *  a.albumPhotos is list of string representation of images and this method turns them into Photo objects
+	 *             Creates observable list of photos from observable list of
+	 *             strings. a.albumPhotos is list of string representation of images
+	 *             and this method turns them into Photo objects
 	 */
-	public void updateList() throws FileNotFoundException
-	{
-		a.realPhotos.clear();
+	public void updateList() throws FileNotFoundException {
 		
+		a.realPhotos.clear();
+
 		int num = 0;
-		for(String i : a.albumPhotos)
-		{					
-			decoder(i, ("src\\model\\userdata\\albums\\"+u.getName()+"\\" + current.getName()),
-					("src\\model\\userdata\\albums\\"+u.getName()+"\\" + current.getName() + "\\-" + num + ".png"), num);
-			String path = "src\\model\\userdata\\albums\\"+u.getName()+"\\"+ current.getName() + "\\-" + num + ".png";
+		for (String i : a.albumPhotos) {
+			decoder(i, ("src\\model\\userdata\\albums\\" + u.getName() + "\\" + current.getName()),
+					("src\\model\\userdata\\albums\\" + u.getName() + "\\" + current.getName() + "\\-" + num + ".png"),
+					num);
+			String path = "src\\model\\userdata\\albums\\" + u.getName() + "\\" + current.getName() + "\\-" + num
+					+ ".png";
 			Image image = new Image(new FileInputStream(path));
 			Photo photo = new Photo(image, num, i);
-			a.realPhotos.add(photo);			
+			a.realPhotos.add(photo);
 			num++;
-		}	
+		}
 	}
-	
+
 	/**
 	 * @param photo
 	 * 
-	 * Sets the photo attributes from editable textfields
+	 *            Sets the photo attributes from editable textfields
 	 */
 	public void saveInfo(Photo photo) {
-		
+
 		photo.setCaption(editCaptionTextField.getText());
 		photo.setTagName(editTagNameTextField.getText());
 		photo.setTagValue(editTagValueTextField.getText());
-				
 
 	}
-	
-	
+
 }

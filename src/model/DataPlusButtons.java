@@ -40,8 +40,6 @@ public class DataPlusButtons implements Serializable
 	protected static ObservableList<Album> photoLibrary = FXCollections.observableArrayList();
 	protected static ObservableList<String> photoAlbum = FXCollections.observableArrayList();
 	
-	protected static ObservableList<Path> pictureLocations = FXCollections.observableArrayList();
-	
 	/**
 	 *
 	 * @param event ActionEvent
