@@ -1,33 +1,52 @@
+/**
+ * @author Colin Ackereley, Steven Benmoha
+ */
 package model;
 import java.io.Serializable;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+@SuppressWarnings("serial")
 public class Album implements Comparable<Object>, Serializable
 {
 	public String albumName;
 	public static ObservableList<String> albumPhotos = FXCollections.observableArrayList();
+	/**
+	 * 
+	 * @param String
+	 *            representing the name of an album
+	 * @return
+	 */
 	public Album(String s)
 	{
 		this.albumName = s;
 		albumPhotos = FXCollections.observableArrayList();
 	}
+	/**
+	 * @return ObservableList representing the current album
+	 */
 	public ObservableList<String> getAlbum()
 	{
 		return albumPhotos;
 	}
-	public String toString()
-	{
-		return albumName;
-	}
+	/**
+	 * @return String containing the name of the album
+	 */
 	public String getName()
 	{
 		return albumName;
 	}
+	/**
+	 * @param albumName
+	 *            String representing what to change the album name to
+	 */
 	public void setName(String albumName)
 	{
-		this.albumName = this.albumName;
+		this.albumName = albumName;
 	}
+	/**
+	 * @param Object
+	 *            to compare an album with
+	 */
 	@Override
 	public int compareTo(Object o)
 	{

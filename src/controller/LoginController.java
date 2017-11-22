@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.DataPlusButtons;
 import model.User;
+@SuppressWarnings("serial")
 public class LoginController extends DataPlusButtons
 {
 	@FXML
@@ -24,6 +25,8 @@ public class LoginController extends DataPlusButtons
 									// of users
 		usernameTextField.setEditable(true);
 		quitButton.setOnAction(this::quitProgram);
+		primaryStage.setMaxHeight(625);
+		primaryStage.setMaxWidth(900);
 		loginButton.setOnAction(event ->
 		{
 			try

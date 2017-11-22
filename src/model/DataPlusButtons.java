@@ -9,7 +9,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Base64;
-
 import controller.LoginController;
 import controller.PhotoLibraryController;
 import controller.SearchController;
@@ -20,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 public class DataPlusButtons implements Serializable
@@ -131,6 +129,7 @@ public class DataPlusButtons implements Serializable
 			e.printStackTrace();
 		}
 	}
+	@SuppressWarnings("resource")
 	public static ObservableList<Album> readUsersAlbumsFile(User u)
 	{ // Deserializes .dat file containing user's list of albums and updates
 		// ObservableList
@@ -141,6 +140,7 @@ public class DataPlusButtons implements Serializable
 			{
 				FileInputStream input = new FileInputStream(albumFile);
 				ObjectInputStream ois = new ObjectInputStream(input);
+				@SuppressWarnings("unchecked")
 				ArrayList<Album> userPhotoLibrary = (ArrayList<Album>)ois.readObject();
 				return FXCollections.observableList(userPhotoLibrary);
 			}
@@ -216,8 +216,7 @@ public class DataPlusButtons implements Serializable
 		return null;
 	}
 	public static void writeCurrentAlbum(User u, Album a, ObservableList<String> albumPhotos)
-	{ 	
-				
+	{
 		try
 		{
 			File currentAlbumFile = new File(
@@ -239,7 +238,7 @@ public class DataPlusButtons implements Serializable
 		}
 	}
 	public static ObservableList<String> readCurrentAlbumFile(User u, Album a)
-	{ 
+	{
 		currentAlbumFile = new File("src\\model\\userdata\\albums\\" + u.getName() + "-" + a.albumName + ".dat");
 		if(currentAlbumFile.exists() && !getFileExtension(currentAlbumFile).equals("txt"))
 		{
@@ -272,45 +271,47 @@ public class DataPlusButtons implements Serializable
 		else
 			return "";
 	}
-	
-	
-	public static String encoder(String imagePath) {
+	public static String encoder(String imagePath)
+	{
 		String base64Image = "";
 		File file = new File(imagePath);
-		try (FileInputStream imageInFile = new FileInputStream(file)) {
+		try(FileInputStream imageInFile = new FileInputStream(file))
+		{
 			// Reading a Image file from file system
-			byte imageData[] = new byte[(int) file.length()];
+			byte imageData[] = new byte[(int)file.length()];
 			imageInFile.read(imageData);
 			base64Image = Base64.getEncoder().encodeToString(imageData);
-		} catch (FileNotFoundException e) {
+		}
+		catch(FileNotFoundException e)
+		{
 			System.out.println("Image not found" + e);
-		} catch (IOException ioe) {
+		}
+		catch(IOException ioe)
+		{
 			System.out.println("Exception while reading the Image " + ioe);
 		}
 		return base64Image;
 	}
-	
-	
-
-public static void decoder(String base64Image,String albumName, String pathFile, int num) {
-	
-	File directory = new File(albumName);
-	if (! directory.exists()){
-        directory.mkdirs();
+	public static void decoder(String base64Image, String albumName, String pathFile, int num)
+	{
+		File directory = new File(albumName);
+		if(!directory.exists())
+		{
+			directory.mkdirs();
+		}
+		try(FileOutputStream imageOutFile = new FileOutputStream(pathFile, false))
+		{
+			// Converting a Base64 String into Image byte array
+			byte[] imageByteArray = Base64.getDecoder().decode(base64Image);
+			imageOutFile.write(imageByteArray);
+		}
+		catch(FileNotFoundException e)
+		{
+			System.out.println("Image not found" + e);
+		}
+		catch(IOException ioe)
+		{
+			System.out.println("Exception while reading the Image " + ioe);
+		}
 	}
-	
-	
-	try (FileOutputStream imageOutFile = new FileOutputStream(pathFile, false)) {
-		// Converting a Base64 String into Image byte array
-		byte[] imageByteArray = Base64.getDecoder().decode(base64Image);
-		imageOutFile.write(imageByteArray);
-	} catch (FileNotFoundException e) {
-		System.out.println("Image not found" + e);
-	} catch (IOException ioe) {
-		System.out.println("Exception while reading the Image " + ioe);
-	}
-}
-	
-	
-	
 }

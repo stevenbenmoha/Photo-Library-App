@@ -1,3 +1,6 @@
+/**
+ * @author Colin Ackerley, Steven Benmoha
+ */
 package model;
 import controller.LoginController;
 import javafx.application.Application;
@@ -7,8 +10,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 public class Photos extends Application
 {
-	private String caption;
 	@Override
+	/**
+	 * @param stage representing the initial view
+	 */
 	public void start(Stage primaryStage)
 	{
 		try
@@ -29,7 +34,11 @@ public class Photos extends Application
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * @param args default java arguments
+	 */
+
 	public static void main(String[] args)
 	{
 		launch(args);
