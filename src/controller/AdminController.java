@@ -1,3 +1,6 @@
+
+
+
 package controller;
 import java.io.IOException;
 import java.util.Optional;
@@ -12,6 +15,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.DataPlusButtons;
 import model.User;
+/**
+ * @author Steven Benmoha, Colin Ackerley
+ *
+ */
 public class AdminController extends DataPlusButtons
 {
 	@FXML
@@ -20,6 +27,12 @@ public class AdminController extends DataPlusButtons
 	TextField usernameEntry;
 	@FXML
 	ListView<User> users = new ListView<User>();
+	/**
+	 * @param primaryStage
+	 * @throws IOException
+	 * 
+	 * the start method that runs the controller
+	 */
 	public void start(Stage primaryStage) throws IOException
 	{
 		userList = readUserFile(); // Deserializes .dat file contained in model\\userdata\\users and updates list
@@ -42,12 +55,22 @@ public class AdminController extends DataPlusButtons
 		deleteUserButton.setOnAction(this::deleteUser);
 		add.setOnAction(this::add);
 	}
+	/**
+	 * @param event
+	 * 
+	 * Enables the create user button
+	 */
 	@FXML
 	private void createUser(ActionEvent event)
 	{
 		usernameEntry.setDisable(false);
 		add.setDisable(false);
 	}
+	/**
+	 * @param event
+	 * 
+	 * Adds the user to the userlist
+	 */
 	@FXML
 	private void add(ActionEvent event)
 	{
@@ -86,6 +109,11 @@ public class AdminController extends DataPlusButtons
 			add.setDisable(true);
 		}
 	}
+	/**
+	 * @param event
+	 * 
+	 * Deletes user from user list
+	 */
 	@FXML
 	private void deleteUser(ActionEvent event)
 	{

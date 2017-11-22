@@ -44,6 +44,12 @@ import model.DataPlusButtons;
 import model.Photo;
 import model.User;
 
+/**
+ * @author Steven Benmoha, Colin Ackerley
+ *
+ */
+
+
 public class PhotoController extends DataPlusButtons
 {
 	@FXML
@@ -61,6 +67,14 @@ public class PhotoController extends DataPlusButtons
 	User u;
 	
 	int num;
+	
+	/**
+	 * @param primaryStage
+	 * @param a
+	 * @throws FileNotFoundException
+	 * 
+	 * Starts the inside-album view and controls functionality
+	 */
 	
 	@SuppressWarnings("static-access")
 	public void start(Stage primaryStage, Album a) throws FileNotFoundException
@@ -151,7 +165,18 @@ public class PhotoController extends DataPlusButtons
 		});
 		
 	}
+	
+	
+	
+	/**
+	 * @param event
+	 * @throws FileNotFoundException
+	 * 
+	 * Saves changes to caption/tag info
+	 */
 	@FXML
+	
+	
 	private void saveChanges(ActionEvent event) throws FileNotFoundException
 	{
 		editCaptionTextField.setDisable(true);
@@ -165,6 +190,11 @@ public class PhotoController extends DataPlusButtons
 	}
 	
 	
+	/**
+	 * @param event
+	 * 
+	 * Enables editing of photo info such as captions/tags
+	 */
 	@FXML
 	private void editPhotoInfo(ActionEvent event)
 	{
@@ -176,6 +206,12 @@ public class PhotoController extends DataPlusButtons
 		
 	}
 	
+	/**
+	 * @param event
+	 * @throws FileNotFoundException
+	 * 
+	 * Deletes photo from listview and removes from observable lists (of type Photo and String)
+	 */
 	@SuppressWarnings("static-access")
 	private void deletePhoto(ActionEvent event) throws FileNotFoundException
 	{
@@ -198,6 +234,13 @@ public class PhotoController extends DataPlusButtons
 		}
 	}
 	
+	/**
+	 * @param event
+	 * @param a
+	 * @throws IOException
+	 * 
+	 * Adds photo to listview
+	 */
 	@SuppressWarnings("static-access")
 	private void addPhoto(ActionEvent event, Album a) throws IOException
 	{
@@ -221,6 +264,11 @@ public class PhotoController extends DataPlusButtons
 		updateList();
 		populatePictures();
 	}
+	/**
+	 * @throws FileNotFoundException
+	 * 
+	 * Populates listview with pictures from album
+	 */
 	@FXML
 	private void populatePictures() throws FileNotFoundException
 	{ 
@@ -303,7 +351,14 @@ public class PhotoController extends DataPlusButtons
 		
 		
 	}
-		
+	
+	
+	/**
+	 * @throws FileNotFoundException
+	 * 
+	 * Creates observable list of photos from observable list of strings.
+	 *  a.albumPhotos is list of string representation of images and this method turns them into Photo objects
+	 */
 	public void updateList() throws FileNotFoundException
 	{
 		a.realPhotos.clear();
@@ -321,6 +376,11 @@ public class PhotoController extends DataPlusButtons
 		}	
 	}
 	
+	/**
+	 * @param photo
+	 * 
+	 * Sets the photo attributes from editable textfields
+	 */
 	public void saveInfo(Photo photo) {
 		
 		photo.setCaption(editCaptionTextField.getText());

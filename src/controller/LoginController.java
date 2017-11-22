@@ -12,6 +12,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.DataPlusButtons;
 import model.User;
+/**
+ * @author Steven Benmoha, Colin Ackerley
+ *
+ */
 @SuppressWarnings("serial")
 public class LoginController extends DataPlusButtons
 {
@@ -19,6 +23,11 @@ public class LoginController extends DataPlusButtons
 	Button loginButton;
 	@FXML
 	TextField usernameTextField;
+	/**
+	 * @param primaryStage
+	 * 
+	 * Starts the login page and controls login functionality
+	 */
 	public void start(Stage primaryStage)
 	{
 		userList = readUserFile(); // Deserializes .dat file contained in model\\userdata\\users and updates list
@@ -39,6 +48,13 @@ public class LoginController extends DataPlusButtons
 			}
 		});
 	}
+	/**
+	 * @param event
+	 * @throws IOException
+	 * 
+	 * Goes to admin page or album page depending on login username
+	 * 
+	 */
 	@FXML
 	private void goToDestination(ActionEvent event) throws IOException
 	{
@@ -89,6 +105,11 @@ public class LoginController extends DataPlusButtons
 			usernameTextField.setText("");
 		}
 	}
+	/** 
+	 * @param event
+	 * 
+	 * quits the program
+	 */
 	@FXML
 	public void quitProgram(ActionEvent event)
 	{

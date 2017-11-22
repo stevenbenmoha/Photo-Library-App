@@ -12,6 +12,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.*;
 
+/**
+ * @author Steven Benmoha, Colin Ackerley
+ *
+ */
 public class PhotoDisplayController extends DataPlusButtons {
 	@FXML
 	ImageView bigPicture;
@@ -22,6 +26,13 @@ public class PhotoDisplayController extends DataPlusButtons {
 
 	int length = a.realPhotos.size();
 
+	/**
+	 * @param primaryStage
+	 * @param current
+	 * @param p
+	 * 
+	 * Starts the fullscreen display and controls functionality
+	 */
 	public void start(Stage primaryStage, Album current, Photo p) {
 
 		pic = p;
@@ -54,6 +65,13 @@ public class PhotoDisplayController extends DataPlusButtons {
 		
 	}
 
+	/**
+	 * @param event
+	 * @param current
+	 * @throws IOException
+	 * 
+	 * returns to current album that picture originates from
+	 */
 	protected void returnToCurrentAlbum(ActionEvent event, Album current) throws IOException {
 		Stage stage;
 		stage = (Stage) logoutButton.getScene().getWindow();
@@ -69,6 +87,12 @@ public class PhotoDisplayController extends DataPlusButtons {
 		stage.show();
 	}
 
+	/**
+	 * @param event
+	 * @return
+	 * 
+	 * Goes to next pic in album
+	 */
 	@FXML
 	public Photo nextPic(ActionEvent event) {
 
@@ -87,6 +111,12 @@ public class PhotoDisplayController extends DataPlusButtons {
 		}
 	}
 
+	/**
+	 * @param event
+	 * @return
+	 * 
+	 * Goes to previous pic in album
+	 */
 	@FXML
 	public Photo prevPic(ActionEvent event) {
 

@@ -17,9 +17,8 @@ public class Album implements Comparable<Object>, Serializable
 	
 	/**
 	 * 
-	 * @param String
-	 *            representing the name of an album
-	 * @return
+	 * @param s String representing the name of an album
+	 * 
 	 */
 	public Album(String s)
 	{
@@ -27,8 +26,9 @@ public class Album implements Comparable<Object>, Serializable
 		albumPhotos = FXCollections.observableArrayList();
 		realPhotos = FXCollections.observableArrayList();
 	}
+	
 	/**
-	 * @return ObservableList representing the current album
+	 * @return
 	 */
 	public ObservableList<String> getAlbum()
 	{
@@ -49,9 +49,9 @@ public class Album implements Comparable<Object>, Serializable
 	{
 		this.albumName = albumName;
 	}
-	/**
-	 * @param Object
-	 *            to compare an album with
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
 	public int compareTo(Object o)

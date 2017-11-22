@@ -31,6 +31,8 @@ public class Photo implements Serializable
 	
 		/**
 		 * @return the current tag string
+		 * 
+		 * Gets the tag name
 		 */
 
 		public String getTag()
@@ -40,6 +42,8 @@ public class Photo implements Serializable
 
 		/**
 		 * @return the current tag value string
+		 * 
+		 * Gets the tag value
 		 */
 
 
@@ -49,12 +53,22 @@ public class Photo implements Serializable
 		}
 		
 
+		/**
+		 * @param s
+		 * 
+		 * Sets the tag name
+		 */
 		public void setTagName(String s)
 		{
 			this.tag = s;
 		}
 		
 
+		/**
+		 * @param s
+		 * 
+		 * Sets the tag value
+		 */
 		public void setTagValue(String s)
 		{
 			this.tagValue = s;
@@ -62,6 +76,8 @@ public class Photo implements Serializable
 		
 	/**
 	 * @return the current caption 
+	 * 
+	 * Gets the current caption
 	 */
 	public String getCaption()
 	{
@@ -69,7 +85,7 @@ public class Photo implements Serializable
 	}
 
 	/**
-	 * @param set the current caption as a string
+	 * @param s String set the current caption as a string
 	 */
 	public void setCaption(String s)
 	{

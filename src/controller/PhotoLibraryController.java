@@ -30,6 +30,10 @@ import javafx.stage.Stage;
 import model.Album;
 import model.DataPlusButtons;
 import model.User;
+/**
+ * @author Steven Benmoha, Colin Ackerley
+ *
+ */
 @SuppressWarnings("serial")
 public class PhotoLibraryController extends DataPlusButtons
 {
@@ -46,6 +50,12 @@ public class PhotoLibraryController extends DataPlusButtons
 	
 	
 	User u;
+	/**
+	 * @param primaryStage
+	 * @throws FileNotFoundException
+	 * 
+	 * starts the album view page and controls functionality
+	 */
 	public void start(Stage primaryStage) throws FileNotFoundException
 	{
 		u = readCurrentUserFile();
@@ -87,6 +97,12 @@ public class PhotoLibraryController extends DataPlusButtons
 			}
 		});
 	}
+	/**
+	 * @param e
+	 * 
+	 * 
+	 * Deletes album from listview
+	 */
 	@FXML
 	private void deleteAlbum(ActionEvent e)
 	{
@@ -104,6 +120,11 @@ public class PhotoLibraryController extends DataPlusButtons
 				deleteAlbumButton.setDisable(true);
 		}
 	}
+	/**
+	 * @param e
+	 * 
+	 * Edits the selected album name
+	 */
 	@FXML
 	private void editAlbumName(ActionEvent e)
 	{
@@ -150,6 +171,11 @@ public class PhotoLibraryController extends DataPlusButtons
 		{
 		}
 	}
+	/**
+	 * @param event
+	 * 
+	 * Adds album to listview
+	 */
 	@FXML
 	private void addAlbum(ActionEvent event)
 	{
@@ -195,6 +221,11 @@ public class PhotoLibraryController extends DataPlusButtons
 		{
 		}
 	}
+	/**
+	 * @throws FileNotFoundException
+	 * 
+	 * Populates listview with albums
+	 */
 	@FXML
 	private void populateAlbums() throws FileNotFoundException
 	{

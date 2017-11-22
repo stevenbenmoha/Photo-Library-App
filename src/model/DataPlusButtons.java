@@ -1,3 +1,7 @@
+/**
+ * @author Colin Ackerley, Steven Benmoha
+ */
+
 package model;
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,12 +42,29 @@ public class DataPlusButtons implements Serializable
 	
 	protected static ObservableList<Path> pictureLocations = FXCollections.observableArrayList();
 	
+	/**
+	 *
+	 * @param event ActionEvent
+	 * 
+	 * quits program
+	 *  	
+	 */
+	
 	@FXML
 	protected void quitProgram(ActionEvent event)
 	{
 		Stage stage = (Stage)quitButton.getScene().getWindow();
 		stage.close();
 	}
+	
+	/**
+	 *
+	 * @param event ActionEvent
+	 * 
+	 * logs out of program
+	 *  	
+	 */
+	
 	@FXML
 	protected void logout(ActionEvent event) throws IOException
 	{
@@ -60,6 +81,15 @@ public class DataPlusButtons implements Serializable
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	/**
+	 *
+	 * @param event ActionEvent
+	 * 
+	 * moves to search screen
+	 *  	
+	 */
+	
 	@FXML
 	protected void search(ActionEvent event) throws IOException
 	{
@@ -76,6 +106,16 @@ public class DataPlusButtons implements Serializable
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	/**
+	 *
+	 * @param event ActionEvent
+	 * 
+	 * Returns page to album view
+	 *  	
+	 */
+	
+	
 	@FXML
 	protected void returnToAlbums(ActionEvent event) throws IOException
 	{
@@ -92,8 +132,17 @@ public class DataPlusButtons implements Serializable
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	/**
+	 *
+	 * @return ObservableList of Users
+	 * 
+	 *  Deserializes .dat file containing user list and updates ObservableList
+	 *  	
+	 */
+	
 	public static ObservableList<User> readUserFile()
-	{ // Deserializes .dat file containing user list and updates ObservableList
+	{ 
 		if(userFile.exists())
 		{
 			try
@@ -113,6 +162,14 @@ public class DataPlusButtons implements Serializable
 		}
 		return FXCollections.observableList(userList);
 	}
+	
+	/**
+	 *
+	 * @param userList 
+	 * 
+	 *  Serializes .dat file containing user list and updates ObservableList
+	 *  	
+	 */
 	public static void writeUser(ObservableList<User> userList)
 	{ // Serializes user list into .dat file
 		try
@@ -133,6 +190,17 @@ public class DataPlusButtons implements Serializable
 			e.printStackTrace();
 		}
 	}
+	
+	
+	/**
+	 * @param u User 
+	 * @return userPhotoLibrary
+	 * 
+	 *  deserializes .dat file containing user's album list and updates ObservableList
+	 *  	
+	 */
+	
+	
 	@SuppressWarnings("resource")
 	public static ObservableList<Album> readUsersAlbumsFile(User u)
 	{ 
@@ -158,6 +226,17 @@ public class DataPlusButtons implements Serializable
 		}
 		return FXCollections.observableList(photoLibrary);
 	}
+	
+	/**
+	 * @param u User
+	 * @param userPhotoLibrary 
+	 * 
+	 * 
+	 *  Serializes .dat file containing user's album list and updates ObservableList
+	 *  	
+	 */
+	
+	
 	public static void writeUsersAlbums(User u, ObservableList<Album> userPhotoLibrary)
 	{ // Serializes user's list of albums into .dat file
 		try
@@ -179,8 +258,17 @@ public class DataPlusButtons implements Serializable
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * @param u User 
+	 * 
+	 * 
+	 *  Serializes .dat file containing current user
+	 *  	
+	 */
+	
 	public static void writeCurrentUser(User u)
-	{ // Serializes the current user so later screen knows who's logged in
+	{ 
 		try
 		{
 			currentUserFile.createNewFile(); // if file already exists will do nothing
@@ -199,9 +287,19 @@ public class DataPlusButtons implements Serializable
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 
+	 * @return u User
+	 * 
+	 *   Deserializes .dat file containing the current user
+	 *  and uses this to inform program of who's logged in
+	 *  	
+	 */
+	
+	
 	public static User readCurrentUserFile()
-	{ // Deserializes .dat file containing the current user
-		// and uses this to inform program of who's logged in
+	{ 
 		try
 		{
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(currentUserFile));
@@ -218,6 +316,18 @@ public class DataPlusButtons implements Serializable
 		}
 		return null;
 	}
+	
+	/**
+	 * @param u User
+	 * @param a Album
+	 * @param albumPhotos
+	 * 
+	 * 
+	 *  Serializes .dat file containing string contents of current album.
+	 *   String contents contain text bytes that make up images
+	 *  	
+	 */	
+	
 	public static void writeCurrentAlbum(User u, Album a, ObservableList<String> albumPhotos)
 	{
 		try
@@ -240,6 +350,19 @@ public class DataPlusButtons implements Serializable
 			e.printStackTrace();
 		}
 	}
+	
+
+	/**
+	 * @param u User
+	 * @param a Album
+	 * @return albumPhotos 
+	 * 
+	 *  Deserializes .dat file containing string contents of current album.
+	 *   String contents contain text bytes that make up images
+	 *  	
+	 */	
+	
+	
 	public static ObservableList<String> readCurrentAlbumFile(User u, Album a)
 	{
 		currentAlbumFile = new File("src\\model\\userdata\\albums\\" + u.getName() + "-" + a.albumName + ".dat");
@@ -263,6 +386,16 @@ public class DataPlusButtons implements Serializable
 		}
 		return FXCollections.observableList(photoAlbum);
 	}
+	
+
+	/**
+	 * @param file File
+	 * @return String containing file extension
+	 * 
+	 *  Gets the file extension of an inputted file
+	 *  	
+	 */	
+	
 	private static String getFileExtension(File file)
 	{
 		String fileName = file.getName();
@@ -274,6 +407,16 @@ public class DataPlusButtons implements Serializable
 		else
 			return "";
 	}
+	
+	
+	/**
+	 * @param imagePath String
+	 * @return String containing text representation of an image
+	 * 
+	 *  Turns an image file at a given path into a string representation
+	 *  	
+	 */	
+	
 	public static String encoder(String imagePath)
 	{
 		String base64Image = "";
@@ -295,6 +438,18 @@ public class DataPlusButtons implements Serializable
 		}
 		return base64Image;
 	}
+	
+	/**
+	 * 
+	 * @param base64Image String
+	 * @param albumName String
+	 * @param pathFile String
+	 * @param num int
+	 * 
+	 *  Turns text representation of image into a .png file
+	 *  	
+	 */	
+	
 	public static void decoder(String base64Image, String albumName, String pathFile, int num)
 	{
 		File directory = new File(albumName);
