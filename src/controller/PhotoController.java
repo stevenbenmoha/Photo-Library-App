@@ -24,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -57,6 +58,7 @@ public class PhotoController extends DataPlusButtons
 	Calendar curTime;
 	User u;
 	int num;
+	// boolean copied;
 	/**
 	 * @param primaryStage
 	 * @param a
@@ -67,11 +69,22 @@ public class PhotoController extends DataPlusButtons
 	public void start(Stage primaryStage, Album a) throws FileNotFoundException
 	{
 		deleteTagButton.setOnAction(this::deleteTag);
-		copyPhotoButton.setOnAction(this::copyPhoto);
+		// copyPhotoButton.setOnAction(this::copyPhoto);
 		movePhotoButton.setOnAction(this::movePhoto);
 		current = a;
 		u = readCurrentUserFile();
 		Album.albumPhotos = readCurrentAlbumFile(u, current);
+		
+		/*
+		if (copied == false) {
+			String x = readPhoto();
+			if (x != null)
+			Album.albumPhotos.add(x);
+			copied = true;
+			copyPhoto.delete();
+			}	
+		*/
+		
 		updateList();
 		photoList.setItems(Album.realPhotos);
 		photoList.getSelectionModel().selectFirst();
@@ -165,13 +178,24 @@ public class PhotoController extends DataPlusButtons
 	private void movePhoto(ActionEvent e)
 	{
 	}
-	@FXML
-	/**
-	 * @param ActionEvent
-	 */
+	
+	/*
 	private void copyPhoto(ActionEvent e)
 	{
-	}
+		TextInputDialog dialog = new TextInputDialog("");
+		dialog.setTitle("Copy Photo");
+		dialog.setHeaderText("Album destination");
+		dialog.setContentText("Please enter an album to copy this photo to: ");
+		Optional<String> name = dialog.showAndWait();
+		
+		if (name!= null) {
+		writeCopy(photoList.getSelectionModel().getSelectedItem().binary, name.get());
+		
+		}
+		}
+		
+		*/
+	
 	@FXML
 	/**
 	 * @param ActionEvent
@@ -287,8 +311,12 @@ public class PhotoController extends DataPlusButtons
 		String path = file.getAbsolutePath();
 		path.substring(1);
 		String img = encoder(path);
+		
 		Album.albumPhotos.add(img);
+			
 		writeCurrentAlbum(u, current, Album.albumPhotos);
+		
+		
 		updateList();
 		populatePictures();
 	}
@@ -299,7 +327,8 @@ public class PhotoController extends DataPlusButtons
 	 */
 	@FXML
 	private void populatePictures() throws FileNotFoundException
-	{
+	{		
+		
 		DropShadow dropShadow = new DropShadow();
 		dropShadow.setRadius(5.0);
 		dropShadow.setOffsetX(3.0);
@@ -379,10 +408,14 @@ public class PhotoController extends DataPlusButtons
 	 *             strings. a.albumPhotos is list of string representation of images
 	 *             and this method turns them into Photo objects
 	 */
+	
 	public void updateList() throws FileNotFoundException
 	{
 		Album.realPhotos.clear();
 		int num = 0;
+		
+		
+		
 		for(String i : Album.albumPhotos)
 		{
 			decoder(i, ("src\\model\\userdata\\albums\\" + u.getName() + "\\" + current.getName()),
@@ -394,10 +427,11 @@ public class PhotoController extends DataPlusButtons
 			Photo photo = new Photo(image, num, i);
 			curTime = Calendar.getInstance();
 			curTime.set(Calendar.MILLISECOND, 0);
-			photo.setDate(curTime);
+			photo.setDate(curTime);			
 			Album.realPhotos.add(photo);
 			num++;
 		}
+		
 	}
 	/**
 	 * @param photo

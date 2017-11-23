@@ -34,11 +34,74 @@ public class DataPlusButtons implements Serializable
 	public static File currentAlbumFile;
 	public static File userFile = new File("src/model/userdata/users/userListFile.ser");
 	public static File currentUserFile = new File("src/model/userdata/users/currentUserFile.ser");
+	// public static File copyPhoto = new File("src/model/userdata/users/copyPhoto.ser");
+	
+	
+	
+	
 	@FXML
 	protected Button quitButton, logoutButton, searchButton, returnToAlbumsButton;
 	protected static ObservableList<User> userList = FXCollections.observableArrayList();
 	protected static ObservableList<Album> photoLibrary = FXCollections.observableArrayList();
 	protected static ObservableList<String> photoAlbum = FXCollections.observableArrayList();
+	protected static String s;
+	
+	
+	/*
+	public static void writeCopy(String text, String name)
+	{ // Serializes user list into .dat file
+		
+			copyPhoto = new File("src/model/userdata/users/copyPhoto.ser");
+		
+		
+		try
+		{
+			copyPhoto.createNewFile(); // if file already exists will do nothing
+			
+			FileOutputStream x = new FileOutputStream(copyPhoto, false);
+			x.close();
+			
+			FileOutputStream output = new FileOutputStream(copyPhoto, false);
+			// write object to files
+			ObjectOutputStream oos = new ObjectOutputStream(output);
+			oos.writeObject(text);
+			oos.close();
+		}
+		catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public static String readPhoto()
+	{ 
+		if(copyPhoto.exists() && copyPhoto.length() > 1)
+		{
+			try
+			{
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(copyPhoto));
+				String s = (String) ois.readObject();
+				copyPhoto.delete();
+				return s;
+			}
+			catch(ClassNotFoundException e)
+			{
+				e.printStackTrace();
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	*/	
+	
 	
 	/**
 	 *
