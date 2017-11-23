@@ -165,11 +165,9 @@ public class PhotoController extends DataPlusButtons
 			}
 		});
 	}
+	
 	/**
-	 * @param event
-	 * @throws FileNotFoundException
-	 * 
-	 *             Saves changes to caption/tag info
+	 * @param e
 	 */
 	@FXML
 	/**
